@@ -1,3 +1,7 @@
+**Skill gate for `tech-stack`:**
+- Apply it **only** when the user is executing a plan for a **new full-stack application** (bootstrap/scaffold/one-shot app generation).
+- For general feature planning, bug fixes, refactors, docs, reviews, or service-specific work, **do not** apply it.
+
 Now implement precisely as planned, in full.
 
 Implementation Requirements:

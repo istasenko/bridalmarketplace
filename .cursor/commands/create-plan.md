@@ -1,4 +1,6 @@
-**Apply the `tech-stack` skill for this workflow.**
+**Skill gate for `tech-stack`:**
+- Apply it **only** when the user is planning a **new full-stack application** (bootstrap/scaffold/one-shot app generation).
+- For general feature planning, bug fixes, refactors, docs, reviews, or service-specific work, **do not** apply it.
 
 
 Based on our full exchange, produce a markdown plan document.
@@ -41,3 +43,5 @@ Key architectural/implementation choices made during exploration:
 ...
 
 Again, it's still not time to build yet. Just write the clear plan document. No extra complexity or extra scope beyond what we discussed.
+
+Write the plan to `docs/<plan-description>.md` as well as to the chat window.
