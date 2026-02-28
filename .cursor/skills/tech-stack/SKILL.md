@@ -42,7 +42,7 @@ Apply this workflow for building new applications:
   - verify with `python3 --version`, `pip --version`, and `which python3`
 - Verify Python virtualenv workflow is used for API setup:
   - always create a local virtual environment before installing API dependencies
-  - use `python -m venv .venv python=3.X` (or equivalent command for the user's Python install)
+  - use `python -m venv .venv` (or equivalent command for the user's Python install)
   - activate `.venv` before dependency installation and API run commands
 - Verify PostgreSQL tooling is available before API/database wiring:
   - check for `brew`
@@ -56,19 +56,21 @@ Apply this workflow for building new applications:
 - Ensure app source files are TypeScript (`.ts`, `.tsx`) with Next.js conventions.
 - Use npm for dependency installation and scripts.
 - Provide package scripts for development and build (and test/lint when available).
+- Add standard next.js entries to .gitignore at the project root
 
 ### 3) Create API (Python FastAPI)
 
 - Scaffold `api/` with FastAPI.
 - Ensure Python dependency file is present (`requirements.txt`).
 - Use a project-local virtual environment for all API commands:
-  - create with `python -m venv .venv python=3.X` (or equivalent)
+  - create with `python -m venv .venv` (or equivalent)
   - activate `.venv` before installing dependencies
   - install dependencies only inside the active virtual environment
 - Add a health endpoint.
 - Add minimal marketplace resource skeletons (for example: listings, users, orders).
 - Read DB config from environment variables.
 - Use Python migration tooling for schema management (for example Alembic).
+- Add standard FastAPI entries and .venv/ to .gitignore at the project root
 
 ### 4) Configure Local PostgreSQL (No Docker)
 
@@ -116,7 +118,7 @@ Apply this workflow for building new applications:
 - [ ] `web/tsconfig.json` exists
 - [ ] `web/` is a Next.js TypeScript app and contains no `.js`/`.jsx` source files
 - [ ] `api/` has FastAPI app structure and Python dependencies configured
-- [ ] `api/.venv` is created with `python -m venv .venv python=3.X` (or equivalent) and used for API dependency installation/run
+- [ ] `api/.venv` is created with `python -m venv .venv` (or equivalent) and used for API dependency installation/run
 - [ ] API uses `DATABASE_URL` for PostgreSQL
 - [ ] README includes macOS local Postgres setup, run, and smoke-test instructions
 
