@@ -1,6 +1,6 @@
 ---
 name: tech-stack
-description: Enforce technology choices for new applications; a TypeScript web app, Ruby on Rails API, and PostgreSQL. Use when the user asks to bootstrap, scaffold, or one-shot generate a marketplace/full-stack app.
+description: Enforce technology choices for new applications; a TypeScript web app, Python FastAPI API, and PostgreSQL. Use when the user asks to bootstrap, scaffold, or one-shot generate a marketplace/full-stack app.
 ---
 
 # Full Stack Application Tech Stack
@@ -10,7 +10,7 @@ description: Enforce technology choices for new applications; a TypeScript web a
 You must enforce all of the following:
 
 1. Web app uses Next.js with TypeScript only (`.ts`/`.tsx`; no `.js`/`.jsx` source files).
-2. API is implemented in Ruby on Rails.
+2. API is implemented in Python FastAPI.
 3. Database is PostgreSQL running locally.
 4. No Docker or container runtime for any service.
 
@@ -21,7 +21,7 @@ If the user asks for conflicting tech, pause and confirm before continuing.
 Unless the user gives a compatible alternative, create:
 
 - `web/` Next.js TypeScript frontend app
-- `api/` Ruby on Rails API service
+- `api/` Python FastAPI service
 - `README.md` root-level setup and run guide
 
 ## Required Workflow
@@ -36,11 +36,14 @@ Apply this workflow for building new applications:
   - check for `node` and `npm`
   - if missing, stop and instruct user to install Node.js with npm first
   - verify with `node -v`, `npm -v`, and `which npm`
-- Verify Ruby tooling is available before Rails scaffolding:
-  - check for `rvm` and `bundle`
-  - if missing, stop and instruct user to install/use `rvm` first
-  - ensure project Ruby version is installed and active via `rvm`
-  - verify with `ruby -v`, `bundle -v`, and `which ruby`
+- Verify Python tooling is available before FastAPI scaffolding:
+  - check for `python3` and `pip`
+  - if missing, stop and instruct user to install Python 3 first
+  - verify with `python3 --version`, `pip --version`, and `which python3`
+- Verify Python virtualenv workflow is used for API setup:
+  - always create a local virtual environment before installing API dependencies
+  - use `python -m venv .venv python=3.X` (or equivalent command for the user's Python install)
+  - activate `.venv` before dependency installation and API run commands
 - Verify PostgreSQL tooling is available before API/database wiring:
   - check for `brew`
   - if missing, stop and instruct user to install Homebrew first
@@ -54,20 +57,18 @@ Apply this workflow for building new applications:
 - Use npm for dependency installation and scripts.
 - Provide package scripts for development and build (and test/lint when available).
 
-### 3) Create API (Ruby on Rails)
+### 3) Create API (Python FastAPI)
 
-- Scaffold `api/` with Rails API mode.
-- Ensure Gem dependencies and Ruby version files are present.
-- Follow the same Ruby/Bundler pattern as existing Rails repos:
-  - use `rvm` for Ruby version management
-  - include `Gemfile` and `.ruby-version`
-  - run `bundle install` from the app directory
-  - do not set `GEM_HOME`/`GEM_PATH` to workspace-local paths
-  - do not create or commit a `.gem/` directory in the repository
+- Scaffold `api/` with FastAPI.
+- Ensure Python dependency file is present (`requirements.txt`).
+- Use a project-local virtual environment for all API commands:
+  - create with `python -m venv .venv python=3.X` (or equivalent)
+  - activate `.venv` before installing dependencies
+  - install dependencies only inside the active virtual environment
 - Add a health endpoint.
 - Add minimal marketplace resource skeletons (for example: listings, users, orders).
 - Read DB config from environment variables.
-- Use Rails migrations for schema management.
+- Use Python migration tooling for schema management (for example Alembic).
 
 ### 4) Configure Local PostgreSQL (No Docker)
 
@@ -101,9 +102,9 @@ Apply this workflow for building new applications:
 
 - Do not use Docker, Docker Compose, podman, or containerized local databases.
 - Do not generate frontend JavaScript source files.
-- Do not generate a non-Rails backend.
+- Do not generate a non-FastAPI backend.
 - Do not wire a non-PostgreSQL database.
-- Do not create or commit `.gem/` in the project repository.
+- Do not install API dependencies globally; use `.venv` only.
 - Do not finish without runnable commands.
 
 ## Validation Checklist (Must Pass Before Completion)
@@ -111,12 +112,11 @@ Apply this workflow for building new applications:
 - [ ] No Docker or compose files are created
 - [ ] `brew` is installed and used for local PostgreSQL setup and service management
 - [ ] `npm` is installed and used for web dependency management and scripts
-- [ ] `rvm` is installed and used for Ruby version selection
+- [ ] `python3` and `pip` are installed for API development
 - [ ] `web/tsconfig.json` exists
 - [ ] `web/` is a Next.js TypeScript app and contains no `.js`/`.jsx` source files
-- [ ] `api/` has Rails API app structure and Gem dependencies
-- [ ] Ruby is pinned via `.ruby-version` and dependencies are installed via `bundle install`
-- [ ] No `.gem/` or `vendor/` directory exists in repository
+- [ ] `api/` has FastAPI app structure and Python dependencies configured
+- [ ] `api/.venv` is created with `python -m venv .venv python=3.X` (or equivalent) and used for API dependency installation/run
 - [ ] API uses `DATABASE_URL` for PostgreSQL
 - [ ] README includes macOS local Postgres setup, run, and smoke-test instructions
 
