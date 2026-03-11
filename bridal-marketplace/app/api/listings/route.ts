@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { zipToCoords } from "@/lib/geo";
+import { categories } from "@/lib/mock/categories";
 
 export async function POST(request: NextRequest) {
   try {
@@ -53,6 +54,15 @@ export async function POST(request: NextRequest) {
       }
     }
     if (!categoryId?.trim()) errors.push("Category is required");
+    const validCategory = categories.find((c) => c.id === String(categoryId).trim());
+    if (!validCategory) {
+      errors.push("Invalid category. Please select a valid category.");
+    } else if (!validCategory.parentId) {
+      const hasSubs = categories.some((c) => c.parentId === validCategory!.id);
+      if (hasSubs) {
+        errors.push("Please select a specific subcategory, not a parent category.");
+      }
+    }
     if (!Array.isArray(styleIds) || styleIds.length === 0) {
       errors.push("At least one style is required");
     }

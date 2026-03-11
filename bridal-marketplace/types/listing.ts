@@ -2,6 +2,8 @@ export type Category = {
   id: string;
   slug: string;
   name: string;
+  /** Parent category id; undefined for top-level. Listings always use leaf (subcategory) ids. */
+  parentId?: string;
 };
 
 export type Style = {

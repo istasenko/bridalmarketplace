@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ImageUpload } from "@/components/ImageUpload";
 import type { ImageUploadRef } from "@/components/ImageUpload";
-import { categories } from "@/lib/mock/categories";
 import { styles } from "@/lib/mock/styles";
+import { getTopLevelCategories, getSubcategories } from "@/lib/listings";
 import type { DeliveryOption, ListingKind, CreatorListingType } from "@/types/listing";
 
 const RESELLER_CONDITIONS = ["like new", "gently used", "used"] as const;
@@ -250,11 +250,24 @@ export default function CreateListingForm() {
           className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
         >
           <option value="">Select category</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
+          {getTopLevelCategories().map((parent) => {
+            const subs = getSubcategories(parent.id);
+            return (
+              <optgroup key={parent.id} label={parent.name}>
+                {subs.length > 0 ? (
+                  subs.map((sub) => (
+                    <option key={sub.id} value={sub.id}>
+                      {sub.name}
+                    </option>
+                  ))
+                ) : (
+                  <option key={parent.id} value={parent.id}>
+                    {parent.name}
+                  </option>
+                )}
+              </optgroup>
+            );
+          })}
         </select>
       </div>
 

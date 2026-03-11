@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import type { Listing, Category, Style, ListingFilters } from "@/types/listing";
 import { applyListingFilters } from "@/lib/filter-listings";
 import FilterBar from "@/components/FilterBar";
@@ -9,21 +10,28 @@ type MarketplaceContentProps = {
   listings: Listing[];
   categories: Category[];
   styles: Style[];
-  initialFilters?: ListingFilters;
 };
 
 export default function MarketplaceContent({
   listings,
   categories,
   styles,
-  initialFilters = {},
 }: MarketplaceContentProps) {
-  const filtered = applyListingFilters(
-    listings,
-    initialFilters,
-    categories,
-    styles
-  );
+  const searchParams = useSearchParams();
+  const maxMilesParam = searchParams.get("maxMiles");
+  const maxMiles =
+    maxMilesParam && !isNaN(parseInt(maxMilesParam, 10))
+      ? parseInt(maxMilesParam, 10)
+      : undefined;
+  const filters: ListingFilters = {
+    category: searchParams.get("category") || undefined,
+    style: searchParams.get("style") || undefined,
+    zip: searchParams.get("zip")?.trim() || undefined,
+    maxMiles,
+    includeShippable: searchParams.get("ship") === "1",
+  };
+
+  const filtered = applyListingFilters(listings, filters, categories, styles);
 
   return (
     <>

@@ -3,6 +3,14 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Category, Style } from "@/types/listing";
 
+function getTopLevelCategories(categories: Category[]): Category[] {
+  return categories.filter((c) => !c.parentId);
+}
+
+function getSubcategories(categories: Category[], parentId: string): Category[] {
+  return categories.filter((c) => c.parentId === parentId);
+}
+
 const MAX_MILES_OPTIONS = [
   { value: "1", label: "1 mi" },
   { value: "5", label: "5 mi" },
@@ -57,11 +65,20 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
             className="rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
           >
             <option value="">All</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
+            {getTopLevelCategories(categories).flatMap((parent) => {
+              const subs = getSubcategories(categories, parent.id);
+              return [
+                <option key={parent.id} value={parent.slug}>
+                  {parent.name}
+                </option>,
+                ...subs.map((sub) => (
+                  <option key={sub.id} value={sub.slug}>
+                    {"\u00A0\u00A0"}
+                    {sub.name}
+                  </option>
+                )),
+              ];
+            })}
           </select>
         </div>
         <div className="flex items-center gap-2">
