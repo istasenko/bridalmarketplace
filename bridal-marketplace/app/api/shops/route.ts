@@ -117,7 +117,7 @@ export async function PATCH(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { shopName, shopDescription, zip } = body;
+    const { shopName, shopDescription, shopPolicies, avatarUrl, zip } = body;
 
     const updates: Record<string, unknown> = {};
 
@@ -130,6 +130,12 @@ export async function PATCH(request: NextRequest) {
     }
     if (shopDescription !== undefined) {
       updates.shop_description = shopDescription?.trim() || null;
+    }
+    if (shopPolicies !== undefined) {
+      updates.shop_policies = shopPolicies?.trim() || null;
+    }
+    if (avatarUrl !== undefined) {
+      updates.avatar_url = avatarUrl?.trim() || null;
     }
     if (zip !== undefined && zip !== null && String(zip).trim()) {
       const zipClean = String(zip).replace(/\s/g, "").slice(0, 5);

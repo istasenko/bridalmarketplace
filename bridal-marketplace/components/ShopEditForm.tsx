@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Shop } from "@/lib/shops-db";
+import ShopAvatarUpload from "@/components/ShopAvatarUpload";
 
 type ShopEditFormProps = {
   shop: Shop;
@@ -12,6 +13,8 @@ type ShopEditFormProps = {
 export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditFormProps) {
   const [shopName, setShopName] = useState(shop.shopName);
   const [shopDescription, setShopDescription] = useState(shop.shopDescription ?? "");
+  const [shopPolicies, setShopPolicies] = useState(shop.shopPolicies ?? "");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(shop.avatarUrl);
   const [zip, setZip] = useState(shop.zip);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -27,6 +30,8 @@ export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditForm
         body: JSON.stringify({
           shopName: shopName.trim(),
           shopDescription: shopDescription.trim() || undefined,
+          shopPolicies: shopPolicies.trim() || undefined,
+          avatarUrl: avatarUrl ?? undefined,
           zip: zip.trim(),
         }),
         credentials: "include",
@@ -40,6 +45,8 @@ export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditForm
         ...shop,
         shopName: shopName.trim(),
         shopDescription: shopDescription.trim() || null,
+        shopPolicies: shopPolicies.trim() || null,
+        avatarUrl,
         zip: zip.trim(),
         location: zip.trim(),
       });
@@ -51,10 +58,17 @@ export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditForm
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-4 border-t border-neutral-200 pt-6">
+    <form onSubmit={handleSubmit} className="mt-6 space-y-6 border-t border-neutral-200 pt-6">
       {error && (
         <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800">{error}</div>
       )}
+
+      <ShopAvatarUpload
+        sellerId={shop.sellerId}
+        currentUrl={shop.avatarUrl}
+        onUrlChange={setAvatarUrl}
+      />
+
       <div>
         <label htmlFor="shopName" className="block text-sm font-medium text-neutral-700">
           Shop name *
@@ -69,19 +83,41 @@ export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditForm
           placeholder="e.g. Bride's Treasures"
         />
       </div>
+
       <div>
         <label htmlFor="shopDescription" className="block text-sm font-medium text-neutral-700">
           About your shop
         </label>
+        <p className="mb-1 text-xs text-neutral-500">
+          This appears on your shop&apos;s About tab. Tell buyers about your items and style.
+        </p>
         <textarea
           id="shopDescription"
-          rows={3}
+          rows={4}
           value={shopDescription}
           onChange={(e) => setShopDescription(e.target.value)}
           className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-          placeholder="Tell buyers a bit about what you sell..."
+          placeholder="Tell buyers a bit about what you sell, your wedding style, or why you're selling..."
         />
       </div>
+
+      <div>
+        <label htmlFor="shopPolicies" className="block text-sm font-medium text-neutral-700">
+          Shop policies
+        </label>
+        <p className="mb-1 text-xs text-neutral-500">
+          This appears on your shop&apos;s Shop Policies tab. Include returns, shipping, or custom order info.
+        </p>
+        <textarea
+          id="shopPolicies"
+          rows={5}
+          value={shopPolicies}
+          onChange={(e) => setShopPolicies(e.target.value)}
+          className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          placeholder="e.g. All sales final. Local pickup preferred in NYC. I can ship at buyer's expense..."
+        />
+      </div>
+
       <div>
         <label htmlFor="zip" className="block text-sm font-medium text-neutral-700">
           Location (Zip code) *
@@ -99,6 +135,7 @@ export default function ShopEditForm({ shop, onSuccess, onCancel }: ShopEditForm
         />
         <p className="mt-1 text-xs text-neutral-500">NYC metro area only (5 digits)</p>
       </div>
+
       <div className="flex gap-3">
         <button
           type="submit"
