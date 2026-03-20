@@ -1,12 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Listing } from "@/types/listing";
 import { getCategories, getStyles } from "@/lib/listings";
+import ContactSellerButton from "@/components/ContactSellerButton";
 
 type ListingDetailProps = {
   listing: Listing;
+  isOwner?: boolean;
 };
 
-export default function ListingDetail({ listing }: ListingDetailProps) {
+export default function ListingDetail({ listing, isOwner = false }: ListingDetailProps) {
   const categories = getCategories();
   const allStyles = getStyles();
   const category = categories.find((c) => c.id === listing.categoryId);
@@ -67,12 +70,21 @@ export default function ListingDetail({ listing }: ListingDetailProps) {
               {listing.seller.location}
               {listing.seller.zip ? ` ${listing.seller.zip}` : ""}
             </p>
-            <a
-              href={`mailto:${listing.seller.contactEmail}`}
-              className="mt-4 inline-block rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700"
-            >
-              Contact seller
-            </a>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {listing.sellerId && (
+                <Link
+                  href={`/shops/${listing.sellerId}`}
+                  className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+                >
+                  View shop
+                </Link>
+              )}
+              <ContactSellerButton
+                listingId={listing.id}
+                email={listing.seller.contactEmail}
+                shouldTrack={!isOwner}
+              />
+            </div>
           </div>
         </div>
       </div>

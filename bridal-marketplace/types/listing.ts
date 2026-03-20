@@ -39,6 +39,12 @@ export type Listing = {
   styleIds: string[];
   imageUrls: string[];
   seller: Seller;
+  /** Seller's profile ID (for linking to shop page). Present on DB listings. */
+  sellerId?: string;
+  /** Number of times the listing was viewed (seller analytics). */
+  viewCount?: number;
+  /** Number of contact clicks (seller analytics). */
+  contactCount?: number;
   /** Number of units (e.g. 20 table cards). Default 1. */
   quantity?: number;
   /** How buyer can receive: pickup only, ship only, or both. */

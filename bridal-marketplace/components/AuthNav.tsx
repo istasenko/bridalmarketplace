@@ -9,18 +9,36 @@ import type { User } from "@supabase/supabase-js";
 export default function AuthNav() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
+  const [sellerId, setSellerId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
+      if (user) {
+        fetch("/api/me", { credentials: "include" })
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.role === "seller" && data.profile?.id) setSellerId(data.profile.id);
+          })
+          .catch(() => {});
+      }
       setLoading(false);
     });
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      setSellerId(null);
+      if (session?.user) {
+        fetch("/api/me", { credentials: "include" })
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.role === "seller" && data.profile?.id) setSellerId(data.profile.id);
+          })
+          .catch(() => {});
+      }
     });
     return () => subscription.unsubscribe();
   }, []);
@@ -57,6 +75,14 @@ export default function AuthNav() {
         <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
           Sell
         </Link>
+        {sellerId && (
+          <Link
+            href={`/shops/${sellerId}`}
+            className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+          >
+            My shop
+          </Link>
+        )}
         <Link href="/api-docs" className="text-sm text-neutral-600 hover:text-neutral-900" title="API Documentation">
           API
         </Link>

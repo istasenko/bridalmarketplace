@@ -12,6 +12,7 @@ type DbListing = {
   image_urls: string[];
   quantity: number;
   delivery_option: string;
+  seller_id?: string | null;
   seller_name: string;
   seller_location: string;
   seller_zip: string;
@@ -23,6 +24,8 @@ type DbListing = {
   creator_listing_type?: string | null;
   made_to_order?: boolean | null;
   lead_time_days?: number | null;
+  view_count?: number | null;
+  contact_count?: number | null;
 };
 
 function dbRowToListing(row: DbListing): Listing {
@@ -57,6 +60,9 @@ function dbRowToListing(row: DbListing): Listing {
       lng: row.seller_lng != null ? Number(row.seller_lng) : undefined,
     },
     createdAt: row.created_at,
+    sellerId: row.seller_id ?? undefined,
+    viewCount: row.view_count != null ? Number(row.view_count) : undefined,
+    contactCount: row.contact_count != null ? Number(row.contact_count) : undefined,
   };
 }
 
@@ -77,6 +83,29 @@ export async function fetchListingsFromDb(): Promise<Listing[]> {
     return (data ?? []).map((row) => dbRowToListing(row as unknown as DbListing));
   } catch (e) {
     console.error("fetchListingsFromDb error:", e);
+    return [];
+  }
+}
+
+/**
+ * Fetch listings by seller ID (for shop page).
+ */
+export async function fetchListingsBySellerId(sellerId: string): Promise<Listing[]> {
+  try {
+    const supabase = createAdminClient() ?? createAnonClient();
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("seller_id", sellerId)
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error("fetchListingsBySellerId error:", error);
+      return [];
+    }
+    return (data ?? []).map((row) => dbRowToListing(row as unknown as DbListing));
+  } catch (e) {
+    console.error("fetchListingsBySellerId error:", e);
     return [];
   }
 }
