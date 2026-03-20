@@ -43,25 +43,34 @@ export async function createClient(): Promise<SupabaseClient | null> {
   });
 }
 
+/** Custom fetch that bypasses Next.js cache - ensures fresh data in production */
+const noCacheFetch: typeof fetch = (input, init) =>
+  fetch(input, { ...init, cache: "no-store" });
+
 /**
  * Anonymous Supabase client for public reads (no session/cookies).
  * Use for fetching listings, etc. when auth is not needed.
+ * Uses no-cache fetch so marketplace listings are always fresh (important for production).
  */
 export function createAnonClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !anonKey) return null;
-  return createSupabaseClient(url, anonKey);
+  return createSupabaseClient(url, anonKey, { global: { fetch: noCacheFetch } });
 }
 
 /**
  * Admin client using service role key. Bypasses RLS.
  * Use ONLY for operations where auth has already been validated (e.g. insert after requireSeller()).
  * Never expose this client to the browser or trust unvalidated user input for sensitive fields.
+ * Uses no-cache fetch so marketplace listings are always fresh (important for production).
  */
 export function createAdminClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceRoleKey) return null;
-  return createSupabaseClient(url, serviceRoleKey, { auth: { persistSession: false } });
+  return createSupabaseClient(url, serviceRoleKey, {
+    auth: { persistSession: false },
+    global: { fetch: noCacheFetch },
+  });
 }
