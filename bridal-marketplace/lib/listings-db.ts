@@ -1,5 +1,5 @@
 import type { Listing } from "@/types/listing";
-import { createAnonClient } from "@/lib/supabase/server";
+import { createAnonClient, createAdminClient } from "@/lib/supabase/server";
 
 type DbListing = {
   id: string;
@@ -62,7 +62,9 @@ function dbRowToListing(row: DbListing): Listing {
 
 export async function fetchListingsFromDb(): Promise<Listing[]> {
   try {
-    const supabase = createAnonClient();
+    // Use admin client to bypass RLS - marketplace listings are public.
+    // Falls back to anon if admin key is not configured (e.g. in some dev setups).
+    const supabase = createAdminClient() ?? createAnonClient();
     if (!supabase) return [];
     const { data, error } = await supabase
       .from("listings")
@@ -76,5 +78,30 @@ export async function fetchListingsFromDb(): Promise<Listing[]> {
   } catch (e) {
     console.error("fetchListingsFromDb error:", e);
     return [];
+  }
+}
+
+/**
+ * Fetch a single listing by ID directly. More efficient than fetchListingsFromDb + filter,
+ * and avoids potential RLS/caching issues when viewing a newly created listing.
+ */
+export async function fetchListingByIdFromDb(id: string): Promise<Listing | undefined> {
+  try {
+    const supabase = createAnonClient();
+    if (!supabase) return undefined;
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+    if (error) {
+      console.error("fetchListingByIdFromDb error:", error);
+      return undefined;
+    }
+    if (!data) return undefined;
+    return dbRowToListing(data as unknown as DbListing);
+  } catch (e) {
+    console.error("fetchListingByIdFromDb error:", e);
+    return undefined;
   }
 }

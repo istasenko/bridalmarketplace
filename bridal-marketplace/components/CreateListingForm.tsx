@@ -61,6 +61,7 @@ function ListingKindStep({ onSelect }: ListingKindStepProps) {
 export default function CreateListingForm() {
   const router = useRouter();
   const imageUploadRef = useRef<ImageUploadRef>(null);
+  const submitLockRef = useRef(false);
   const [listingKind, setListingKind] = useState<ListingKind | null>(null);
   const [madeToOrderChecked, setMadeToOrderChecked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -68,6 +69,7 @@ export default function CreateListingForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitLockRef.current) return;
     setError(null);
 
     const form = e.currentTarget;
@@ -130,6 +132,7 @@ export default function CreateListingForm() {
       return;
     }
 
+    submitLockRef.current = true;
     setSubmitting(true);
     try {
       const imageUrls = await imageUploadRef.current!.upload();
@@ -166,6 +169,7 @@ export default function CreateListingForm() {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setSubmitting(false);
+      submitLockRef.current = false;
     }
   };
 

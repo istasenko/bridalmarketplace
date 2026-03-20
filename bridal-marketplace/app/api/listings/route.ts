@@ -106,9 +106,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Prevent duplicate listings: same seller + same title within last 10 minutes
+    const trimmedTitle = String(title).trim();
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const { data: existing } = await supabase
+      .from("listings")
+      .select("id")
+      .eq("seller_id", seller.profile.id)
+      .eq("title", trimmedTitle)
+      .gte("created_at", tenMinutesAgo)
+      .limit(1)
+      .maybeSingle();
+
+    if (existing) {
+      return NextResponse.json(
+        { error: "You already created a listing with this title. Please wait a few minutes before creating a similar listing, or use a different title." },
+        { status: 409 }
+      );
+    }
+
     const insertRow: Record<string, unknown> = {
       seller_id: seller.profile.id,
-      title: String(title).trim(),
+      title: trimmedTitle,
       description: String(description).trim(),
       price: Number(price),
       condition,

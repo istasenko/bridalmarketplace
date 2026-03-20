@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import { getCategories, getStyles, getListings } from "@/lib/listings";
 import MarketplaceContent from "@/components/MarketplaceContent";
 
+// Fetch fresh listings on each visit so new listings appear immediately
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const categories = getCategories();
   const styles = getStyles();

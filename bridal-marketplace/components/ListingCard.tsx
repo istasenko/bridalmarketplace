@@ -21,6 +21,7 @@ export default function ListingCard({ listing, categoryName, styleNames }: Listi
           fill
           className="object-cover transition group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          unoptimized
         />
       </div>
       <div className="flex flex-1 flex-col p-4">

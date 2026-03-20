@@ -25,6 +25,7 @@ export default function ListingDetail({ listing }: ListingDetailProps) {
             className="object-cover"
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
+            unoptimized
           />
         </div>
         <div>
