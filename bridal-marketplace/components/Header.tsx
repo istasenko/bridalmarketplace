@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AuthNav from "@/components/AuthNav";
 
 export default function Header() {
   return (
@@ -7,14 +8,7 @@ export default function Header() {
         <Link href="/" className="text-xl font-semibold tracking-tight text-neutral-800">
           Bridal Marketplace
         </Link>
-        <nav className="flex items-center gap-6">
-          <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
-            Browse
-          </Link>
-          <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
-            Sell
-          </Link>
-        </nav>
+        <AuthNav />
       </div>
     </header>
   );

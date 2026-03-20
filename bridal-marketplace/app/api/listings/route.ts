@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { zipToCoords } from "@/lib/geo";
+import { categories } from "@/lib/mock/categories";
+import { requireSeller } from "@/lib/auth";
+import { enqueueJob } from "@/lib/jobs";
 
 export async function POST(request: NextRequest) {
   try {
+    const seller = await requireSeller();
+    if (!seller) {
+      return NextResponse.json({ error: "Unauthorized. Please log in as a seller." }, { status: 401 });
+    }
+    if (!seller.shop) {
+      return NextResponse.json(
+        { error: "Please set up your shop before creating listings." },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const {
       title,
@@ -15,9 +29,6 @@ export async function POST(request: NextRequest) {
       imageUrls,
       quantity = 1,
       deliveryOption = "both",
-      sellerName,
-      sellerEmail,
-      sellerZip,
       listingKind = "reselling",
       creatorListingType,
       madeToOrder = false,
@@ -53,6 +64,15 @@ export async function POST(request: NextRequest) {
       }
     }
     if (!categoryId?.trim()) errors.push("Category is required");
+    const validCategory = categories.find((c) => c.id === String(categoryId).trim());
+    if (!validCategory) {
+      errors.push("Invalid category. Please select a valid category.");
+    } else if (!validCategory.parentId) {
+      const hasSubs = categories.some((c) => c.parentId === validCategory!.id);
+      if (hasSubs) {
+        errors.push("Please select a specific subcategory, not a parent category.");
+      }
+    }
     if (!Array.isArray(styleIds) || styleIds.length === 0) {
       errors.push("At least one style is required");
     }
@@ -63,36 +83,31 @@ export async function POST(request: NextRequest) {
     if (!deliveryOption || !validDelivery.includes(deliveryOption)) {
       errors.push("Delivery option must be pickup_only, ship_only, or both");
     }
-    if (!sellerName?.trim()) errors.push("Seller name is required");
-    if (!sellerEmail?.trim()) errors.push("Seller email is required");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sellerEmail?.trim())) {
-      errors.push("Valid seller email is required");
-    }
-    if (!sellerZip?.trim()) errors.push("Location (zip) is required");
 
     if (errors.length > 0) {
       return NextResponse.json({ error: errors.join("; ") }, { status: 400 });
     }
 
-    const zip = String(sellerZip).replace(/\s/g, "").slice(0, 5);
+    const zip = seller.shop.zip;
     const coords = zipToCoords(zip);
     if (!coords) {
       return NextResponse.json(
-        { error: "Zip code is not in our service area. Please use a valid NYC metro zip." },
+        { error: "Shop zip code is not in our service area. Update your shop location." },
         { status: 400 }
       );
     }
 
     const [sellerLat, sellerLng] = coords;
-    const supabase = createClient();
+    const supabase = createAdminClient();
     if (!supabase) {
       return NextResponse.json(
-        { error: "Server configuration error: Supabase not configured" },
+        { error: "Server configuration error: Add SUPABASE_SERVICE_ROLE_KEY to .env.local" },
         { status: 503 }
       );
     }
 
     const insertRow: Record<string, unknown> = {
+      seller_id: seller.profile.id,
       title: String(title).trim(),
       description: String(description).trim(),
       price: Number(price),
@@ -102,12 +117,12 @@ export async function POST(request: NextRequest) {
       image_urls: imageUrls.map((url: unknown) => String(url)),
       quantity: Math.max(1, Number(quantity) || 1),
       delivery_option: deliveryOption,
-      seller_name: String(sellerName).trim(),
+      seller_name: seller.profile.name,
       seller_location: zip,
       seller_zip: zip,
       seller_lat: sellerLat,
       seller_lng: sellerLng,
-      seller_email: String(sellerEmail).trim(),
+      seller_email: seller.profile.email,
       listing_kind: kind,
     };
     if (kind === "creator") {
@@ -126,8 +141,14 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Supabase insert error:", error);
-      return NextResponse.json({ error: "Failed to create listing" }, { status: 500 });
+      const errDetail = process.env.NODE_ENV === "development" ? `: ${error.message}` : "";
+      return NextResponse.json({ error: `Failed to create listing${errDetail}` }, { status: 500 });
     }
+
+    // Enqueue background job for image processing (resize, thumbnails, etc.)
+    await enqueueJob("process_listing_images", {
+      payload: { listing_id: data.id, image_urls: imageUrls },
+    });
 
     return NextResponse.json({ id: data.id });
   } catch (e) {

@@ -2,25 +2,10 @@ import { Suspense } from "react";
 import { getCategories, getStyles, getListings } from "@/lib/listings";
 import MarketplaceContent from "@/components/MarketplaceContent";
 
-type PageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export default async function HomePage({ searchParams }: PageProps) {
-  const params = await searchParams;
+export default async function HomePage() {
   const categories = getCategories();
   const styles = getStyles();
   const allListings = await getListings({});
-
-  const filterCategory = typeof params.category === "string" ? params.category : undefined;
-  const filterStyle = typeof params.style === "string" ? params.style : undefined;
-  const filterZip = typeof params.zip === "string" ? params.zip : undefined;
-  const maxMilesParam = typeof params.maxMiles === "string" ? params.maxMiles : undefined;
-  const filterMaxMiles =
-    maxMilesParam && !isNaN(parseInt(maxMilesParam, 10))
-      ? parseInt(maxMilesParam, 10)
-      : undefined;
-  const filterIncludeShippable = params.ship === "1";
 
   return (
     <Suspense
@@ -41,13 +26,6 @@ export default async function HomePage({ searchParams }: PageProps) {
         listings={allListings}
         categories={categories}
         styles={styles}
-        initialFilters={{
-          category: filterCategory,
-          style: filterStyle,
-          zip: filterZip,
-          maxMiles: filterMaxMiles,
-          includeShippable: filterIncludeShippable,
-        }}
       />
     </Suspense>
   );

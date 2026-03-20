@@ -1,0 +1,29 @@
+$kind: collection
+name: Bridal Marketplace API
+description: >-
+  API for the bridal marketplace.
+
+
+  **Authentication:** These endpoints use session cookies. To use them:
+
+  1. Start your dev server (npm run dev)
+
+  2. Log in at http://localhost:3000/login (as a seller)
+
+  3. Open Chrome DevTools → Application → Cookies → localhost:3000
+
+  4. Copy the values of sb-<project>-auth-token and
+  sb-<project>-auth-token-code-verifier
+
+  5. In Postman: Request → Headers, add Cookie header with those values
+
+
+  Or use Postman's "Send cookies" if you've enabled cookie sync with your
+  browser.
+variables:
+  baseUrl: http://localhost:3000
+  accessToken: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{accessToken}}"
