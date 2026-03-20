@@ -3,11 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #1a1a1a;
-  --background: #fafafa;
-  --muted: #737373;
-  --border: #e5e5e5;
-  --accent: #8b7355;
+  --foreground: #1c1917;
+  --background: #fdfcfb;
+  --muted: #78716c;
+  --border: #e7e5e4;
+
+  /* Primary: dusty rose (Gen Z wedding staple) */
+  --accent: #c9a9a6;
+  --accent-light: #f5e8e6;
+  --accent-soft: #faf5f4;
+
+  /* Secondary: sage (very popular for Gen Z weddings) */
+  --sage: #9caa97;
+  --sage-light: #eef3eb;
 }
 
 body {
