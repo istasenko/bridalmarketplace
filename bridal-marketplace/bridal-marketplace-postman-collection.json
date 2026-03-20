@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Bridal Marketplace API",
-    "description": "API for the bridal marketplace.\n\n**Authentication (Bearer token — recommended for Postman):**\n1. Log in at http://localhost:3000/login (as a seller)\n2. Open DevTools (F12) → Console, paste and run:\n   (function(){const c=document.cookie.split('; ').find(x=>x.startsWith('sb-')&&x.includes('base64-'));if(!c)return console.log('Not logged in');try{const v=c.split('=').slice(1).join('=').replace('base64-','');console.log(JSON.parse(atob(v)).access_token);}catch(e){console.log('Use Cookie header instead');}})()\n3. Copy the printed access_token\n4. In Postman: Collection → Edit → Variables → set accessToken to that value\n\n**Alternatively (cookies):** Copy ALL sb-* cookies from Application → Cookies, add as Cookie header: name1=value1; name2=value2",
+    "name": "Ever After API",
+    "description": "API for Ever After.\n\n**Authentication (Bearer token — recommended for Postman):**\n1. Log in at http://localhost:3000/login (as a seller)\n2. Open DevTools (F12) → Console, paste and run:\n   (function(){const c=document.cookie.split('; ').find(x=>x.startsWith('sb-')&&x.includes('base64-'));if(!c)return console.log('Not logged in');try{const v=c.split('=').slice(1).join('=').replace('base64-','');console.log(JSON.parse(atob(v)).access_token);}catch(e){console.log('Use Cookie header instead');}})()\n3. Copy the printed access_token\n4. In Postman: Collection → Edit → Variables → set accessToken to that value\n\n**Alternatively (cookies):** Copy ALL sb-* cookies from Application → Cookies, add as Cookie header: name1=value1; name2=value2",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -39,7 +39,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "openapi"]
             },
-            "description": "Returns the OpenAPI 3.0 specification for the Bridal Marketplace API. No auth required."
+            "description": "Returns the OpenAPI 3.0 specification for the Ever After API. No auth required."
           }
         }
       ]

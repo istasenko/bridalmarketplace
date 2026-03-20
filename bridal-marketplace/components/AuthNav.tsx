@@ -59,9 +59,6 @@ export default function AuthNav() {
         <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
           Sell
         </Link>
-        <Link href="/api-docs" className="text-sm text-neutral-600 hover:text-neutral-900" title="API Documentation">
-          API
-        </Link>
       </nav>
     );
   }
@@ -83,9 +80,6 @@ export default function AuthNav() {
             My shop
           </Link>
         )}
-        <Link href="/api-docs" className="text-sm text-neutral-600 hover:text-neutral-900" title="API Documentation">
-          API
-        </Link>
         <span className="text-sm text-neutral-500">
           {user.email}
         </span>
@@ -108,21 +102,12 @@ export default function AuthNav() {
         <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
           Sell
         </Link>
-        <Link href="/api-docs" className="text-sm text-neutral-600 hover:text-neutral-900" title="API Documentation">
-          API
-        </Link>
         <Link
           href="/login"
-        className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
-      >
-        Log in
-      </Link>
-      <Link
-        href="/signup"
-        className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
-      >
-        Sign up
-      </Link>
+          className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+        >
+          Log in
+        </Link>
     </nav>
   );
 }

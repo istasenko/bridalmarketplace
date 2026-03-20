@@ -8,7 +8,7 @@ export default function SellPage() {
         href="/"
         className="mb-8 inline-block text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
       >
-        ← Back to marketplace
+        ← Keep shopping
       </Link>
       <h1 className="text-2xl font-semibold text-neutral-900">Create a listing</h1>
       <p className="mt-2 text-neutral-600">

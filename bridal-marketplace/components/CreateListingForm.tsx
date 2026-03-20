@@ -181,7 +181,7 @@ export default function CreateListingForm() {
           href="/"
           className="mt-8 inline-block text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
         >
-          ← Back to marketplace
+          ← Keep shopping
         </Link>
       </div>
     );

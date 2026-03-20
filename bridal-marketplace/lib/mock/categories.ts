@@ -1,7 +1,7 @@
 import type { Category } from "@/types/listing";
 
 /**
- * MECE category hierarchy for the bridal marketplace.
+ * MECE category hierarchy for Ever After.
  * Listings reference leaf (subcategory) IDs. Parent categories group for display/filtering.
  */
 export const categories: Category[] = [
