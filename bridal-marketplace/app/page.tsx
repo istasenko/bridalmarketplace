@@ -1,3 +1,4 @@
+import { unstable_noStore } from "next/cache";
 import { Suspense } from "react";
 import { getCategories, getStyles, getListings } from "@/lib/listings";
 import MarketplaceContent from "@/components/MarketplaceContent";
@@ -6,6 +7,7 @@ import MarketplaceContent from "@/components/MarketplaceContent";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  unstable_noStore();
   const categories = getCategories();
   const styles = getStyles();
   const allListings = await getListings({});
