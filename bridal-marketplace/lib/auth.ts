@@ -7,6 +7,15 @@ export type ProfileWithShop = {
   shop: { id: string; shop_name: string; shop_description: string | null; location: string; zip: string } | null;
 };
 
+/** Profile for any authenticated user (no shop required) */
+export type ProfileBasic = {
+  id: string;
+  role: string;
+  name: string;
+  email: string;
+  zip: string | null;
+};
+
 /**
  * Get the currently authenticated user (validated against Auth server).
  * Returns null if not authenticated or token invalid.
@@ -33,8 +42,36 @@ export async function getCurrentUser(): Promise<User | null> {
 }
 
 /**
- * Require an authenticated seller. Returns user + profile + shop or null.
- * Use in API routes that require seller auth.
+ * Require an authenticated user with profile. Returns profile or null.
+ * Use when any logged-in user can act (e.g. creating a shop).
+ */
+export async function requireAuth(): Promise<ProfileBasic | null> {
+  const user = await getCurrentUser();
+  if (!user) return null;
+
+  const supabase = await createClient();
+  if (!supabase) return null;
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("id, role, name, email, zip")
+    .eq("id", user.id)
+    .single();
+
+  if (error || !profile) return null;
+
+  return {
+    id: profile.id,
+    role: profile.role,
+    name: profile.name,
+    email: profile.email,
+    zip: profile.zip ?? null,
+  };
+}
+
+/**
+ * Require an authenticated seller (user with a shop). Returns profile + shop or null.
+ * Seller = has a shop; anyone can create a shop to become a seller.
  */
 export async function requireSeller(): Promise<ProfileWithShop | null> {
   const user = await getCurrentUser();
@@ -43,19 +80,21 @@ export async function requireSeller(): Promise<ProfileWithShop | null> {
   const supabase = await createClient();
   if (!supabase) return null;
 
+  const { data: shop } = await supabase
+    .from("shops")
+    .select("id, shop_name, shop_description, location, zip")
+    .eq("seller_id", user.id)
+    .maybeSingle();
+
+  if (!shop) return null;
+
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("id, role, name, email, zip")
     .eq("id", user.id)
     .single();
 
-  if (profileError || !profile || profile.role !== "seller") return null;
-
-  const { data: shop } = await supabase
-    .from("shops")
-    .select("id, shop_name, shop_description, location, zip")
-    .eq("seller_id", user.id)
-    .maybeSingle();
+  if (profileError || !profile) return null;
 
   return {
     profile: {
@@ -65,14 +104,12 @@ export async function requireSeller(): Promise<ProfileWithShop | null> {
       email: profile.email,
       zip: profile.zip ?? null,
     },
-    shop: shop
-      ? {
-          id: shop.id,
-          shop_name: shop.shop_name,
-          shop_description: shop.shop_description ?? null,
-          location: shop.location,
-          zip: shop.zip,
-        }
-      : null,
+    shop: {
+      id: shop.id,
+      shop_name: shop.shop_name,
+      shop_description: shop.shop_description ?? null,
+      location: shop.location,
+      zip: shop.zip,
+    },
   };
 }
