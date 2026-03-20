@@ -98,6 +98,9 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: errors.join("; ") }, { status: 400 });
     }
 
+    if (!seller.shop) {
+      return NextResponse.json({ error: "Shop required" }, { status: 403 });
+    }
     const zip = seller.shop.zip;
     const coords = zipToCoords(zip);
     if (!coords) {
