@@ -20,12 +20,10 @@ export default function SellGate() {
       })
       .then((data) => {
         if (!data) return;
-        if (data.role === "seller" && !data.shop) {
-          setStatus("setup_shop");
-        } else if (data.role === "seller" && data.shop) {
+        if (data.shop) {
           setStatus("ready");
         } else {
-          setStatus("login");
+          setStatus("setup_shop");
         }
       })
       .catch(() => setStatus("login"));
@@ -44,8 +42,8 @@ export default function SellGate() {
       <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-8">
         <h2 className="text-lg font-medium text-neutral-900">Log in to create listings</h2>
         <p className="mt-2 text-neutral-600">
-          You need to be logged in as a seller to list items. Sign up as a seller or log in to
-          continue.
+          Log in to list items. You can browse and buy without an account, but you need to sign in
+          to sell.
         </p>
         <div className="mt-6 flex gap-4">
           <Link

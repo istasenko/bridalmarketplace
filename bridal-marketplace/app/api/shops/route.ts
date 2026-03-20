@@ -1,22 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { zipToCoords } from "@/lib/geo";
-import { requireSeller } from "@/lib/auth";
+import { requireAuth, requireSeller } from "@/lib/auth";
 
 export async function GET() {
-  const seller = await requireSeller();
-  if (!seller) {
+  const profile = await requireAuth();
+  if (!profile) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  return NextResponse.json({ shop: seller.shop });
+  const supabase = await createClient();
+  if (!supabase) {
+    return NextResponse.json({ error: "Server configuration error" }, { status: 503 });
+  }
+  const { data: shop } = await supabase
+    .from("shops")
+    .select("id, shop_name, shop_description, location, zip")
+    .eq("seller_id", profile.id)
+    .maybeSingle();
+  return NextResponse.json({ shop: shop ?? null });
 }
 
 export async function POST(request: NextRequest) {
-  const seller = await requireSeller();
-  if (!seller) {
+  const profile = await requireAuth();
+  if (!profile) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  if (seller.shop) {
+  const supabase = await createClient();
+  if (!supabase) {
+    return NextResponse.json({ error: "Server configuration error" }, { status: 503 });
+  }
+  const { data: existingShop } = await supabase
+    .from("shops")
+    .select("id")
+    .eq("seller_id", profile.id)
+    .maybeSingle();
+  if (existingShop) {
     return NextResponse.json(
       { error: "Shop already exists. Use PATCH to update." },
       { status: 400 }
@@ -62,7 +80,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase
       .from("shops")
       .insert({
-        seller_id: seller.profile.id,
+        seller_id: profile.id,
         shop_name: String(shopName).trim(),
         shop_description: shopDescription?.trim() || null,
         location: zipClean,

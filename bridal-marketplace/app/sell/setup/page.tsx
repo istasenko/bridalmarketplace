@@ -148,10 +148,10 @@ export default function ShopSetupPage() {
             {loading ? "Creating..." : "Create shop"}
           </button>
           <Link
-            href="/sell"
+            href="/"
             className="rounded-md border border-neutral-300 px-6 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
           >
-            Skip for now
+            I&apos;ll do this later
           </Link>
         </div>
       </form>
