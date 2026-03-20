@@ -15,12 +15,12 @@ export default async function HomePage() {
   return (
     <Suspense
       fallback={
-        <div className="border-b border-neutral-200 bg-white py-4">
+        <div className="border-b border-[var(--border)] py-4">
           <div className="mx-auto max-w-6xl px-4 py-8">
-            <div className="h-8 w-32 animate-pulse rounded bg-neutral-200" />
+            <div className="h-8 w-32 animate-pulse rounded-z bg-accent-soft" />
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="aspect-[4/3] animate-pulse rounded-lg bg-neutral-200" />
+                <div key={i} className="aspect-[4/3] animate-pulse rounded-z-lg bg-accent-soft" />
               ))}
             </div>
           </div>

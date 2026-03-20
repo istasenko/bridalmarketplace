@@ -53,10 +53,10 @@ export default function AuthNav() {
   if (loading) {
     return (
       <nav className="flex items-center gap-6">
-        <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
+        <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
           Browse
         </Link>
-        <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
+        <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
           Sell
         </Link>
       </nav>
@@ -66,27 +66,27 @@ export default function AuthNav() {
   if (user) {
     return (
       <nav className="flex items-center gap-6">
-        <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
+        <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
           Browse
         </Link>
-        <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
+        <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
           Sell
         </Link>
         {sellerId && (
           <Link
             href={`/shops/${sellerId}`}
-            className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+            className="text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
           >
             My shop
           </Link>
         )}
-        <span className="text-sm text-neutral-500">
+        <span className="text-sm text-[var(--muted)]">
           {user.email}
         </span>
         <button
           type="button"
           onClick={handleLogout}
-          className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+          className="text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
         >
           Log out
         </button>
@@ -96,18 +96,18 @@ export default function AuthNav() {
 
   return (
     <nav className="flex items-center gap-6">
-      <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
+      <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
         Browse
       </Link>
-        <Link href="/sell" className="text-sm font-medium text-neutral-800 hover:underline">
-          Sell
-        </Link>
-        <Link
-          href="/login"
-          className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
-        >
-          Log in
-        </Link>
+      <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
+        Sell
+      </Link>
+      <Link
+        href="/login"
+        className="rounded-z bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+      >
+        Log in
+      </Link>
     </nav>
   );
 }

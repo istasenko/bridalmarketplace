@@ -52,17 +52,17 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
   }
 
   return (
-    <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white/95 py-4 backdrop-blur">
+    <div className="sticky top-0 z-10 border-b border-[var(--border)] bg-white/95 py-5 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4">
         <div className="flex items-center gap-2">
-          <label htmlFor="category" className="text-sm font-medium text-neutral-600">
+          <label htmlFor="category" className="text-sm font-medium text-[var(--muted)]">
             Category
           </label>
           <select
             id="category"
             value={category}
             onChange={(e) => updateFilters({ category: e.target.value })}
-            className="rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm text-[var(--foreground)] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">All</option>
             {getTopLevelCategories(categories).flatMap((parent) => {
@@ -82,11 +82,11 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-neutral-600">Style</span>
+          <span className="text-sm font-medium text-[var(--muted)]">Style</span>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => updateFilters({ style: "" })}
-              className={`rounded-full px-3 py-1.5 text-sm ${!style ? "bg-neutral-800 text-white" : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"}`}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${!style ? "bg-accent text-white hover:bg-accent/90" : "bg-sage-light text-sage hover:bg-sage-light/80"}`}
             >
               All
             </button>
@@ -94,15 +94,15 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
               <button
                 key={s.id}
                 onClick={() => updateFilters({ style: s.slug })}
-                className={`rounded-full px-3 py-1.5 text-sm ${style === s.slug ? "bg-neutral-800 text-white" : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"}`}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${style === s.slug ? "bg-accent text-white hover:bg-accent/90" : "bg-sage-light text-sage hover:bg-sage-light/80"}`}
               >
                 {s.name}
               </button>
             ))}
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 border-l border-neutral-200 pl-4">
-          <label htmlFor="zip" className="text-sm font-medium text-neutral-600">
+        <div className="flex flex-wrap items-center gap-2 border-l border-[var(--border)] pl-4">
+          <label htmlFor="zip" className="text-sm font-medium text-[var(--muted)]">
             Your zip
           </label>
           <input
@@ -113,19 +113,19 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
             maxLength={5}
             value={zip}
             onChange={(e) => updateFilters({ zip: e.target.value.replace(/\D/g, "").slice(0, 5) })}
-            className="w-20 rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="w-20 rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
           {maxMiles && !zip && (
             <span className="text-xs text-amber-600">Enter zip to filter by distance</span>
           )}
-          <label htmlFor="maxMiles" className="text-sm font-medium text-neutral-600">
+          <label htmlFor="maxMiles" className="text-sm font-medium text-[var(--muted)]">
             Max miles
           </label>
           <select
             id="maxMiles"
             value={maxMiles}
             onChange={(e) => updateFilters({ maxMiles: e.target.value })}
-            className="rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">Any</option>
             {MAX_MILES_OPTIONS.map((m) => (
@@ -139,9 +139,9 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
               type="checkbox"
               checked={includeShippable}
               onChange={(e) => updateFilters({ includeShippable: e.target.checked })}
-              className="h-4 w-4 rounded border-neutral-300 text-neutral-800 focus:ring-neutral-500"
+              className="h-4 w-4 rounded border-[var(--border)] text-accent focus:ring-accent/50"
             />
-            <span className="text-sm text-neutral-600">Also show shippable items (adds listings outside your range)</span>
+            <span className="text-sm text-[var(--muted)]">Also show shippable items (adds listings outside your range)</span>
           </label>
         </div>
       </div>

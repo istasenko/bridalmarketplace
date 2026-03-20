@@ -20,12 +20,12 @@ export default async function ListingPage({ params }: PageProps) {
   const isOwner = !!listing.sellerId && currentUser?.id === listing.sellerId;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--background)]">
       <ListingViewTracker listingId={id} shouldTrack={!isOwner} />
       <div className="mx-auto max-w-4xl px-4 pt-4">
         <Link
           href={isOwner && listing.sellerId ? `/shops/${listing.sellerId}` : "/"}
-          className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+          className="text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
         >
           ← {isOwner ? "Back to shop" : "Back to listings"}
         </Link>

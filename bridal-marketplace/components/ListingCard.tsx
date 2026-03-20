@@ -12,31 +12,31 @@ export default function ListingCard({ listing, categoryName, styleNames }: Listi
   const sellerLocation = listing.seller.location + (listing.seller.zip ? ` ${listing.seller.zip}` : "");
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm transition hover:shadow-md">
+    <div className="group flex flex-col overflow-hidden rounded-z-lg border border-[var(--border)] bg-white shadow-z transition-all duration-300 hover:shadow-z-hover">
       <Link href={`/listings/${listing.id}`} className="flex flex-1 flex-col">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-z-lg bg-accent-soft">
           <Image
             src={listing.imageUrls[0] ?? ""}
             alt={listing.title}
             fill
-            className="object-cover transition group-hover:scale-105"
+            className="object-cover transition duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             unoptimized
           />
         </div>
         <div className="flex flex-1 flex-col p-4">
-          <p className="text-lg font-semibold text-neutral-800 group-hover:text-neutral-600">
+          <p className="font-heading text-lg font-semibold text-[var(--foreground)] transition-colors group-hover:text-accent">
             {listing.title}
           </p>
-          <p className="mt-1 text-sm font-medium text-neutral-700">${listing.price}</p>
+          <p className="mt-1 text-sm font-semibold text-accent">${listing.price}</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
-            <span className="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600">
+            <span className="rounded-z bg-sage-light px-2.5 py-0.5 text-xs font-medium text-sage">
               {categoryName}
             </span>
             {styleNames.slice(0, 2).map((name) => (
               <span
                 key={name}
-                className="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"
+                className="rounded-z bg-accent-light px-2.5 py-0.5 text-xs font-medium text-accent"
               >
                 {name}
               </span>
@@ -44,16 +44,16 @@ export default function ListingCard({ listing, categoryName, styleNames }: Listi
           </div>
         </div>
       </Link>
-      <div className="border-t border-neutral-100 px-4 py-2">
+      <div className="border-t border-[var(--border)] px-4 py-2.5">
         {listing.sellerId ? (
           <Link
             href={`/shops/${listing.sellerId}`}
-            className="text-xs text-neutral-500 hover:underline"
+            className="text-xs text-[var(--muted)] transition-colors hover:text-accent hover:underline"
           >
             {sellerLocation}
           </Link>
         ) : (
-          <p className="text-xs text-neutral-500">{sellerLocation}</p>
+          <p className="text-xs text-[var(--muted)]">{sellerLocation}</p>
         )}
       </div>
     </div>

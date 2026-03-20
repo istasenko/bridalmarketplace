@@ -26,9 +26,9 @@ export default function ShopHeader({
   const shopAge = formatShopAge(shop.createdAt);
 
   return (
-    <div className="flex flex-wrap items-start justify-between gap-6 border-b border-neutral-200 pb-6">
+    <div className="flex flex-wrap items-start justify-between gap-6 border-b border-[var(--border)] pb-6">
       <div className="flex items-start gap-4">
-        <div className="flex h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-neutral-200">
+        <div className="flex h-20 w-20 shrink-0 overflow-hidden rounded-z-lg bg-accent-soft">
           {shop.avatarUrl ? (
             <Image
               src={shop.avatarUrl}
@@ -39,17 +39,17 @@ export default function ShopHeader({
               unoptimized
             />
           ) : (
-            <span className="flex h-full w-full items-center justify-center text-2xl font-semibold text-neutral-500">
+            <span className="flex h-full w-full items-center justify-center text-2xl font-semibold text-[var(--muted)]">
               {shop.shopName.charAt(0).toUpperCase()}
             </span>
           )}
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-neutral-900">{shop.shopName}</h1>
-          <p className="mt-1 text-sm text-neutral-600">
+          <h1 className="font-heading text-2xl font-bold text-[var(--foreground)]">{shop.shopName}</h1>
+          <p className="mt-1 text-sm text-[var(--muted)]">
             NYC Metro • Zip {shop.zip}
           </p>
-          <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-neutral-500">
+          <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-[var(--muted)]">
             <span className="flex items-center gap-1">
               <span aria-hidden>★</span> No reviews yet
             </span>
@@ -62,13 +62,13 @@ export default function ShopHeader({
           <>
             <a
               href={`mailto:${sellerEmail}`}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+              className="inline-flex items-center gap-2 rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
             >
               <span aria-hidden>✉</span> Contact
             </a>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+              className="inline-flex items-center gap-2 rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
             >
               <span aria-hidden>♡</span> Follow
             </button>
@@ -78,7 +78,7 @@ export default function ShopHeader({
           <button
             type="button"
             onClick={onEditClick}
-            className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            className="rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
           >
             Edit shop
           </button>
