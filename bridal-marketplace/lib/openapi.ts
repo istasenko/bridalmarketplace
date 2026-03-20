@@ -1,12 +1,12 @@
 /**
- * OpenAPI 3.0 specification for the Bridal Marketplace API.
+ * OpenAPI 3.0 specification for the Ever After API.
  */
 export const openApiSpec = {
   openapi: "3.0.0",
   info: {
-    title: "Bridal Marketplace API",
+    title: "Ever After API",
     description:
-      "API for the bridal marketplace — listings, shops, and user profile.\n\n**To authorize:** Click **Authorize**, choose **bearerAuth**, paste your access token. Get it by: 1) Log in at /login as a seller, 2) Open DevTools → Console, 3) Run the token script from the Postman collection description (or see /api/openapi).",
+      "API for Ever After — listings, shops, and user profile.\n\n**To authorize:** Click **Authorize**, choose **bearerAuth**, paste your access token. Get it by: 1) Log in at /login as a seller, 2) Open DevTools → Console, 3) Run the token script from the Postman collection description (or see /api/openapi).",
     version: "1.0.0",
   },
   servers: [

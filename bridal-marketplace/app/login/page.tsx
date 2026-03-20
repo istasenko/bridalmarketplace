@@ -95,14 +95,14 @@ function LoginForm() {
             href="/signup"
             className="text-center text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
           >
-            Don&apos;t have an account? Sign up
+            Don&apos;t have an account? Sign up here
           </Link>
         </div>
       </form>
 
       <p className="mt-6 text-center text-xs text-neutral-500">
         <Link href="/" className="hover:underline">
-          ← Back to marketplace
+          ← Keep shopping
         </Link>
       </p>
     </div>

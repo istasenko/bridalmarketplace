@@ -34,7 +34,7 @@ export default async function ShopPage({ params }: PageProps) {
           href="/"
           className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
         >
-          ← Back to marketplace
+          ← Keep shopping
         </Link>
       </div>
       {isOwner ? (

@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Bridal Marketplace",
+  title: "Ever After",
   description: "Buy and sell wedding items by category and style.",
 };
 
