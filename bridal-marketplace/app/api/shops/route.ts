@@ -84,3 +84,72 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  const seller = await requireSeller();
+  if (!seller) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!seller.shop) {
+    return NextResponse.json(
+      { error: "No shop found. Create one first via /sell/setup." },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const body = await request.json();
+    const { shopName, shopDescription, zip } = body;
+
+    const updates: Record<string, unknown> = {};
+
+    if (shopName !== undefined) {
+      const trimmed = String(shopName).trim();
+      if (!trimmed) {
+        return NextResponse.json({ error: "Shop name cannot be empty" }, { status: 400 });
+      }
+      updates.shop_name = trimmed;
+    }
+    if (shopDescription !== undefined) {
+      updates.shop_description = shopDescription?.trim() || null;
+    }
+    if (zip !== undefined && zip !== null && String(zip).trim()) {
+      const zipClean = String(zip).replace(/\s/g, "").slice(0, 5);
+      const coords = zipToCoords(zipClean);
+      if (!coords) {
+        return NextResponse.json(
+          { error: "Zip code is not in our service area. Please use a valid NYC metro zip." },
+          { status: 400 }
+        );
+      }
+      updates.location = zipClean;
+      updates.zip = zipClean;
+      updates.lat = coords[0];
+      updates.lng = coords[1];
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
+    }
+
+    const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Server configuration error" }, { status: 503 });
+    }
+
+    const { error } = await supabase
+      .from("shops")
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq("seller_id", seller.profile.id);
+
+    if (error) {
+      console.error("Shops PATCH error:", error);
+      return NextResponse.json({ error: "Failed to update shop" }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    console.error("PATCH /api/shops error:", e);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
