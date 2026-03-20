@@ -1,0 +1,133 @@
+{
+  "info": {
+    "name": "Bridal Marketplace API",
+    "description": "API for the bridal marketplace.\n\n**Authentication (Bearer token — recommended for Postman):**\n1. Log in at http://localhost:3000/login (as a seller)\n2. Open DevTools (F12) → Console, paste and run:\n   (function(){const c=document.cookie.split('; ').find(x=>x.startsWith('sb-')&&x.includes('base64-'));if(!c)return console.log('Not logged in');try{const v=c.split('=').slice(1).join('=').replace('base64-','');console.log(JSON.parse(atob(v)).access_token);}catch(e){console.log('Use Cookie header instead');}})()\n3. Copy the printed access_token\n4. In Postman: Collection → Edit → Variables → set accessToken to that value\n\n**Alternatively (cookies):** Copy ALL sb-* cookies from Application → Cookies, add as Cookie header: name1=value1; name2=value2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "OpenAPI",
+      "item": [
+        {
+          "name": "Get OpenAPI spec",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/openapi",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "openapi"]
+            },
+            "description": "Returns the OpenAPI 3.0 specification for the Bridal Marketplace API. No auth required."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Get current user (me)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "me"]
+            },
+            "description": "Returns the authenticated user's profile and shop (if seller). Requires login."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shops",
+      "item": [
+        {
+          "name": "Get my shop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shops",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shops"]
+            },
+            "description": "Returns the authenticated seller's shop. 401 if not logged in as seller."
+          }
+        },
+        {
+          "name": "Create shop",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shopName\": \"Bride's Treasures\",\n  \"shopDescription\": \"Pre-loved wedding items at great prices\",\n  \"zip\": \"10001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/shops",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shops"]
+            },
+            "description": "Create a shop for the authenticated seller. Must not already have a shop. Zip must be NYC metro (5 digits)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listings",
+      "item": [
+        {
+          "name": "Create listing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Acrylic Table Numbers 1–20\",\n  \"description\": \"Used once for our wedding, great condition. Numbers 1-20 included.\",\n  \"price\": 25,\n  \"condition\": \"like new\",\n  \"categoryId\": \"signage-table-numbers\",\n  \"styleIds\": [\"1\", \"8\"],\n  \"imageUrls\": [\"https://example.com/placeholder.jpg\"],\n  \"quantity\": 1,\n  \"deliveryOption\": \"both\",\n  \"listingKind\": \"reselling\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/listings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "listings"]
+            },
+            "description": "Create a new listing. Requires authenticated seller with a shop.\n\n**categoryId:** Use a leaf category, e.g. signage-table-numbers, stationery-place-cards.\n**styleIds:** Use style IDs: 1=rustic, 2=modern, 3=garden, 5=classic, 6=vintage, 7=romantic, 8=minimalist, 9=kitschy.\n**imageUrls:** Must be real uploaded image URLs (upload via the app first or use a placeholder)."
+          }
+        }
+      ]
+    }
+  ]
+}

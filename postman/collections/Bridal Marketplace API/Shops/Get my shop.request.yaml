@@ -1,0 +1,5 @@
+$kind: http-request
+description: Returns the authenticated seller's shop. 401 if not logged in as seller.
+url: "{{baseUrl}}/api/shops"
+method: GET
+order: 1000

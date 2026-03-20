@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ImageUpload } from "@/components/ImageUpload";
 import type { ImageUploadRef } from "@/components/ImageUpload";
 import { styles } from "@/lib/mock/styles";
-import { getTopLevelCategories, getSubcategories } from "@/lib/listings";
+import { getTopLevelCategories, getSubcategories } from "@/lib/categories";
 import type { DeliveryOption, ListingKind, CreatorListingType } from "@/types/listing";
 
 const RESELLER_CONDITIONS = ["like new", "gently used", "used"] as const;
@@ -82,9 +82,6 @@ export default function CreateListingForm() {
     const styleIds = formData.getAll("styleIds") as string[];
     const quantity = Number(formData.get("quantity")) || 1;
     const deliveryOption = formData.get("deliveryOption") as DeliveryOption;
-    const sellerZip = String(formData.get("sellerZip") ?? "").trim();
-    const sellerName = String(formData.get("sellerName") ?? "").trim();
-    const sellerEmail = String(formData.get("sellerEmail") ?? "").trim();
     const creatorListingType = formData.get("creatorListingType") as CreatorListingType | "";
     const madeToOrder = kind === "creator" && formData.get("madeToOrder") === "on";
     const leadTimeDays = Number(formData.get("leadTimeDays")) || 0;
@@ -126,18 +123,6 @@ export default function CreateListingForm() {
       setError("Delivery option is required");
       return;
     }
-    if (!sellerZip || sellerZip.length < 5) {
-      setError("Valid zip code (5 digits) is required");
-      return;
-    }
-    if (!sellerName) {
-      setError("Seller name is required");
-      return;
-    }
-    if (!sellerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sellerEmail)) {
-      setError("Valid email is required");
-      return;
-    }
 
     const files = imageUploadRef.current?.getFiles() ?? [];
     if (files.length === 0) {
@@ -158,9 +143,6 @@ export default function CreateListingForm() {
         imageUrls,
         quantity,
         deliveryOption,
-        sellerName,
-        sellerEmail,
-        sellerZip,
         listingKind: kind,
       };
       if (kind === "creator") {
@@ -172,6 +154,7 @@ export default function CreateListingForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -426,49 +409,9 @@ export default function CreateListingForm() {
         </div>
       </div>
 
-      <div>
-        <label htmlFor="sellerZip" className="block text-sm font-medium text-neutral-700">
-          Location (Zip Code) *
-        </label>
-        <input
-          id="sellerZip"
-          name="sellerZip"
-          type="text"
-          required
-          maxLength={5}
-          pattern="[0-9]{5}"
-          placeholder="10001"
-          className="mt-1 block w-full max-w-[140px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-        />
-        <p className="mt-1 text-xs text-neutral-500">NYC metro area only (5 digits)</p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="sellerName" className="block text-sm font-medium text-neutral-700">
-            Your name *
-          </label>
-          <input
-            id="sellerName"
-            name="sellerName"
-            type="text"
-            required
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="sellerEmail" className="block text-sm font-medium text-neutral-700">
-            Your email *
-          </label>
-          <input
-            id="sellerEmail"
-            name="sellerEmail"
-            type="email"
-            required
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-          />
-        </div>
-      </div>
+      <p className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm text-neutral-600">
+        Your contact info and location will be taken from your shop profile.
+      </p>
 
       <div>
         <label className="block text-sm font-medium text-neutral-700">Photos *</label>

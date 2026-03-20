@@ -1,0 +1,12 @@
+# Use this workspace to collaborate
+workspace:
+  id: b1312e9e-9470-4a94-8d81-fe1961284d6a
+
+localResources:
+  collections:
+    - ../bridal-marketplace/bridal-marketplace-postman-collection.json
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+cloudResources:
+  collections:
+    ../postman/collections/Bridal Marketplace API: 3fab73b5-a993-4c16-a421-d2b9b796f043

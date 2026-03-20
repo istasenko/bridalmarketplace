@@ -1,0 +1,16 @@
+$kind: http-request
+description: Create a shop for the authenticated seller. Must not already have a
+  shop. Zip must be NYC metro (5 digits).
+url: "{{baseUrl}}/api/shops"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "shopName": "Bride's Treasures",
+      "shopDescription": "Pre-loved wedding items at great prices",
+      "zip": "10001"
+    }
+order: 2000

@@ -1,5 +1,5 @@
 import type { Listing } from "@/types/listing";
-import { createClient } from "@/lib/supabase/server";
+import { createAnonClient } from "@/lib/supabase/server";
 
 type DbListing = {
   id: string;
@@ -62,7 +62,7 @@ function dbRowToListing(row: DbListing): Listing {
 
 export async function fetchListingsFromDb(): Promise<Listing[]> {
   try {
-    const supabase = createClient();
+    const supabase = createAnonClient();
     if (!supabase) return [];
     const { data, error } = await supabase
       .from("listings")

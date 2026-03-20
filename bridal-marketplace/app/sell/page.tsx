@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CreateListingForm from "@/components/CreateListingForm";
+import SellGate from "@/components/SellGate";
 
 export default function SellPage() {
   return (
@@ -15,7 +15,7 @@ export default function SellPage() {
         Add photos, set a price, choose a category and style, and connect with buyers.
       </p>
       <div className="mt-8">
-        <CreateListingForm />
+        <SellGate />
       </div>
     </div>
   );

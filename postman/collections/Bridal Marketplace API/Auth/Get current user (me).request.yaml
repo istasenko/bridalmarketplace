@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get current user (me)
+description: Returns the authenticated user's profile and shop (if seller). Requires login.
+url: http://localhost:3000/api/me
+method: GET
+headers:
+  Authorization: Bearer [{{accessToken}}
+queryParams:
+  - key: Cookie
+    value: sb-gtowdvdmaqgjvjobsfwn-auth-token=base64-eyJhY2Nlc3NfdG9rZW4iOiJleUpoYkdjaU9pSkZVekkxTmlJc0ltdHBaQ0k2SW1SaU5EZzJaamRpTFRjMk1qQXROR1prTkMxaFlXTTJMVFF6TWpJNVpHVmhaak5pTWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcGMzTWlPaUpvZEhSd2N6b3ZMMmQwYjNka2RtUnRZWEZuYW5acWIySnpabmR1TG5OMWNHRmlZWE5sTG1OdkwyRjFkR2d2ZGpFaUxDSnpkV0lpT2lJd09EVmpNemN5Wmkwek1qbGtMVFJrWlRZdE9ESmtOaTA1TnpreU1qWTRNVEV4WVRjaUxDSmhkV1FpT2lKaGRYUm9aVzUwYVdOaGRHVmtJaXdpWlhod0lqb3hOemN6TWpVeU56UTFMQ0pwWVhRaU9qRTNOek15TkRreE5EVXNJbVZ0WVdsc0lqb2lhWE5oWW1Wc2JHVXVjM1JoYzJWdWEyOUFaMjFoYVd3dVkyOXRJaXdpY0dodmJtVWlPaUlpTENKaGNIQmZiV1YwWVdSaGRHRWlPbnNpY0hKdmRtbGtaWElpT2lKbGJXRnBiQ0lzSW5CeWIzWnBaR1Z5Y3lJNld5SmxiV0ZwYkNKZGZTd2lkWE5sY2w5dFpYUmhaR0YwWVNJNmV5SmxiV0ZwYkNJNkltbHpZV0psYkd4bExuTjBZ
+    disabled: true
+order: 1000

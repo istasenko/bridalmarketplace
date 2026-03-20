@@ -1,0 +1,33 @@
+$kind: http-request
+description: >-
+  Create a new listing. Requires authenticated seller with a shop.
+
+
+  **categoryId:** Use a leaf category, e.g. signage-table-numbers,
+  stationery-place-cards.
+
+  **styleIds:** Use style IDs: 1=rustic, 2=modern, 3=garden, 5=classic,
+  6=vintage, 7=romantic, 8=minimalist, 9=kitschy.
+
+  **imageUrls:** Must be real uploaded image URLs (upload via the app first or
+  use a placeholder).
+url: "{{baseUrl}}/api/listings"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: >-
+    {
+      "title": "Acrylic Table Numbers 1–20",
+      "description": "Used once for our wedding, great condition. Numbers 1-20 included.",
+      "price": 25,
+      "condition": "like new",
+      "categoryId": "signage-table-numbers",
+      "styleIds": ["1", "8"],
+      "imageUrls": ["https://example.com/placeholder.jpg"],
+      "quantity": 1,
+      "deliveryOption": "both",
+      "listingKind": "reselling"
+    }
+order: 1000

@@ -1,0 +1,6 @@
+$kind: http-request
+description: Returns the OpenAPI 3.0 specification for the Bridal Marketplace
+  API. No auth required.
+url: "{{baseUrl}}/api/openapi"
+method: GET
+order: 1000
