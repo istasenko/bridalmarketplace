@@ -66,7 +66,7 @@ export default function ShopSetupPage() {
   if (checking) {
     return (
       <div className="mx-auto max-w-md px-4 py-16">
-        <p className="text-neutral-600">Loading...</p>
+        <p className="text-[var(--muted)]">Loading...</p>
       </div>
     );
   }
@@ -75,12 +75,12 @@ export default function ShopSetupPage() {
     <div className="mx-auto max-w-lg px-4 py-12">
       <Link
         href="/"
-        className="mb-8 inline-block text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+        className="mb-8 inline-block text-sm text-[var(--muted)] hover:text-[var(--foreground)] hover:underline"
       >
         ← Keep shopping
       </Link>
-      <h1 className="text-2xl font-semibold text-neutral-900">Set up your shop</h1>
-      <p className="mt-2 text-neutral-600">
+      <h1 className="text-2xl font-semibold text-[var(--foreground)]">Set up your shop</h1>
+      <p className="mt-2 text-[var(--muted)]">
         Add your shop details so buyers can find and contact you. This info will appear on your listings.
       </p>
 
@@ -90,7 +90,7 @@ export default function ShopSetupPage() {
         )}
 
         <div>
-          <label htmlFor="shopName" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="shopName" className="block text-sm font-medium text-[var(--muted)]">
             Shop name *
           </label>
           <input
@@ -100,14 +100,14 @@ export default function ShopSetupPage() {
             required
             value={shopName}
             onChange={(e) => setShopName(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-md border border-[var(--border)] px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
             placeholder="e.g. Bride's Treasures"
           />
         </div>
 
         <div>
-          <label htmlFor="shopDescription" className="block text-sm font-medium text-neutral-700">
-            About your shop <span className="text-neutral-500">(optional)</span>
+          <label htmlFor="shopDescription" className="block text-sm font-medium text-[var(--muted)]">
+            About your shop <span className="text-[var(--muted)]">(optional)</span>
           </label>
           <textarea
             id="shopDescription"
@@ -115,13 +115,13 @@ export default function ShopSetupPage() {
             rows={3}
             value={shopDescription}
             onChange={(e) => setShopDescription(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-md border border-[var(--border)] px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
             placeholder="Tell buyers a bit about what you sell..."
           />
         </div>
 
         <div>
-          <label htmlFor="zip" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="zip" className="block text-sm font-medium text-[var(--muted)]">
             Location (Zip code) *
           </label>
           <input
@@ -134,9 +134,9 @@ export default function ShopSetupPage() {
             placeholder="10001"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-            className="mt-1 block w-full max-w-[140px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full max-w-[140px] rounded-md border border-[var(--border)] px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
           />
-          <p className="mt-1 text-xs text-neutral-500">NYC metro area only (5 digits)</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">NYC metro area only (5 digits)</p>
         </div>
 
         <div className="flex gap-4 pt-4">
@@ -149,7 +149,7 @@ export default function ShopSetupPage() {
           </button>
           <Link
             href="/"
-            className="rounded-md border border-neutral-300 px-6 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            className="rounded-md border border-[var(--border)] px-6 py-2.5 text-sm font-medium text-[var(--muted)] hover:bg-accent-soft"
           >
             I&apos;ll do this later
           </Link>

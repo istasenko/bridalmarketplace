@@ -41,18 +41,18 @@ function LoginForm() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-2xl font-semibold text-neutral-900">Log in</h1>
-      <p className="mt-2 text-neutral-600">
+      <h1 className="font-heading text-3xl font-bold text-[var(--foreground)]">Log in</h1>
+      <p className="mt-2 text-[var(--muted)]">
         Welcome back. Log in to browse or manage your listings.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         {error && (
-          <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800">{error}</div>
+          <div className="rounded-z bg-red-50 p-3 text-sm text-red-800">{error}</div>
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)]">
             Email
           </label>
           <input
@@ -63,12 +63,12 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="password" className="block text-sm font-medium text-[var(--foreground)]">
             Password
           </label>
           <input
@@ -79,7 +79,7 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
@@ -87,20 +87,20 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50"
+            className="w-full rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Log in"}
           </button>
           <Link
             href="/signup"
-            className="text-center text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+            className="text-center text-sm text-accent hover:underline"
           >
             Don&apos;t have an account? Sign up here
           </Link>
         </div>
       </form>
 
-      <p className="mt-6 text-center text-xs text-neutral-500">
+      <p className="mt-6 text-center text-xs text-[var(--muted)]">
         <Link href="/" className="hover:underline">
           ← Keep shopping
         </Link>
@@ -111,7 +111,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-md px-4 py-16 text-neutral-600">Loading...</div>}>
+    <Suspense fallback={<div className="mx-auto max-w-md px-4 py-16 text-[var(--muted)]">Loading...</div>}>
       <LoginForm />
     </Suspense>
   );

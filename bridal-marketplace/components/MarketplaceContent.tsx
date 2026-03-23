@@ -36,8 +36,8 @@ export default function MarketplaceContent({
   return (
     <>
       <FilterBar categories={categories} styles={styles} />
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        <h2 className="mb-6 text-lg font-medium text-neutral-600">
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <h2 className="font-heading mb-6 text-xl font-semibold text-[var(--muted)]">
           {filtered.length} listing{filtered.length !== 1 ? "s" : ""}
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -57,7 +57,7 @@ export default function MarketplaceContent({
           })}
         </div>
         {filtered.length === 0 && (
-          <p className="py-12 text-center text-neutral-500">
+          <p className="py-16 text-center text-[var(--muted)]">
             No listings match your filters. Try changing category, style, or distance.
           </p>
         )}

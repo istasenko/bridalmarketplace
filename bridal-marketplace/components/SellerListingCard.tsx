@@ -47,9 +47,9 @@ export default function SellerListingCard({
   };
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
+    <div className="flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-surface shadow-z">
       <Link href={`/listings/${listing.id}`} className="flex flex-1 flex-col">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-mint-soft/50">
           <Image
             src={listing.imageUrls[0] ?? ""}
             alt={listing.title}
@@ -60,9 +60,9 @@ export default function SellerListingCard({
           />
         </div>
         <div className="flex flex-1 flex-col p-4">
-          <p className="text-lg font-semibold text-neutral-800">{listing.title}</p>
-          <p className="mt-1 text-sm font-medium text-neutral-700">${listing.price}</p>
-          <div className="mt-2 flex flex-wrap gap-3 text-xs text-neutral-500">
+          <p className="text-lg font-semibold text-[var(--foreground)]">{listing.title}</p>
+          <p className="mt-1 text-sm font-medium text-[var(--foreground)]">${listing.price}</p>
+          <div className="mt-2 flex flex-wrap gap-3 text-xs text-[var(--muted)]">
             <span title="Views">
               {listing.viewCount ?? 0} view{(listing.viewCount ?? 0) !== 1 ? "s" : ""}
             </span>
@@ -71,13 +71,13 @@ export default function SellerListingCard({
             </span>
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">
-            <span className="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600">
+            <span className="rounded bg-mint-soft/50 px-2 py-0.5 text-xs text-[var(--muted)]">
               {categoryName}
             </span>
             {styleNames.slice(0, 2).map((name) => (
               <span
                 key={name}
-                className="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"
+                className="rounded bg-mint-soft/50 px-2 py-0.5 text-xs text-[var(--muted)]"
               >
                 {name}
               </span>
@@ -88,7 +88,7 @@ export default function SellerListingCard({
       <div className="flex gap-2 border-t border-neutral-100 p-4">
         <Link
           href={`/listings/${listing.id}/edit`}
-          className="flex-1 rounded-md border border-neutral-300 py-2 text-center text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+          className="flex-1 rounded-md border border-neutral-300 py-2 text-center text-sm font-medium text-[var(--foreground)] hover:bg-mint-soft/50"
         >
           Edit
         </Link>

@@ -3,14 +3,44 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #1a1a1a;
-  --background: #fafafa;
-  --muted: #737373;
-  --border: #e5e5e5;
-  --accent: #8b7355;
+  /* From palette spec - dark teal theme */
+  --background: #004643;
+  --foreground: #fffffe;
+  --muted: #abd1c6;
+  --surface: #005e5a;
+  --border: #0d6b68;
+
+  /* Button: buttery yellow-orange */
+  --accent: #f9bc60;
+  --accent-light: #fcd088;
+  --accent-soft: #0d5c59;
+
+  /* Button text on yellow */
+  --button-text: #001e1d;
+
+  /* Illustration accents */
+  --blush: #e16162;
+  --blush-soft: #f0a8a9;
+  --main-light: #e8e4e6;
+
+  /* Legacy aliases */
+  --butter: var(--accent);
+  --butter-pressed: var(--accent-light);
+  --pale-blue: var(--muted);
+  --pale-blue-soft: #0d6b68;
+  --mint: var(--muted);
+  --mint-soft: #0d6b68;
+  --sage: var(--muted);
+  --sage-light: var(--mint-soft);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+}
+
+/* Ensure buttery yellow / light accent elements have dark green text for readability */
+[class*="bg-butter"],
+[class*="bg-accent-light"] {
+  color: #001e1d !important;
 }

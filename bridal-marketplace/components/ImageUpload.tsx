@@ -98,7 +98,7 @@ export const ImageUpload = forwardRef<ImageUploadRef, ImageUploadProps>(
     <div>
       <div
         className={`mt-1 flex min-h-[140px] flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 transition-colors ${
-          dragActive ? "border-neutral-400 bg-neutral-50" : "border-neutral-300 bg-white"
+          dragActive ? "border-accent bg-accent-light" : "border-neutral-300 bg-surface"
         }`}
         onDragOver={(e) => {
           e.preventDefault();

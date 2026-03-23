@@ -47,18 +47,18 @@ export default function SignupPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-2xl font-semibold text-neutral-900">Create an account</h1>
-      <p className="mt-2 text-neutral-600">
+      <h1 className="font-heading text-3xl font-bold text-[var(--foreground)]">Create an account</h1>
+      <p className="mt-2 text-[var(--muted)]">
         You can browse and buy, or set up a shop to sell — one account does both.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         {error && (
-          <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800">{error}</div>
+          <div className="rounded-z bg-red-50 p-3 text-sm text-red-800">{error}</div>
         )}
 
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="name" className="block text-sm font-medium text-[var(--foreground)]">
             Name *
           </label>
           <input
@@ -68,12 +68,12 @@ export default function SignupPage() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)]">
             Email *
           </label>
           <input
@@ -84,12 +84,12 @@ export default function SignupPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="password" className="block text-sm font-medium text-[var(--foreground)]">
             Password *
           </label>
           <input
@@ -101,14 +101,14 @@ export default function SignupPage() {
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
-          <p className="mt-1 text-xs text-neutral-500">At least 6 characters</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">At least 6 characters</p>
         </div>
 
         <div>
-          <label htmlFor="zip" className="block text-sm font-medium text-neutral-700">
-            Zip code <span className="text-neutral-500">(optional)</span>
+          <label htmlFor="zip" className="block text-sm font-medium text-[var(--foreground)]">
+            Zip code <span className="text-[var(--muted)]">(optional)</span>
           </label>
           <input
             id="zip"
@@ -119,13 +119,13 @@ export default function SignupPage() {
             placeholder="10001"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-            className="mt-1 block w-full max-w-[140px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full max-w-[140px] rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
-          <p className="mt-1 text-xs text-neutral-500">For &quot;near me&quot; filtering</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">For &quot;near me&quot; filtering</p>
         </div>
         <div>
-          <label htmlFor="weddingDate" className="block text-sm font-medium text-neutral-700">
-            Wedding date <span className="text-neutral-500">(optional)</span>
+          <label htmlFor="weddingDate" className="block text-sm font-medium text-[var(--foreground)]">
+            Wedding date <span className="text-[var(--muted)]">(optional)</span>
           </label>
           <input
             id="weddingDate"
@@ -133,7 +133,7 @@ export default function SignupPage() {
             type="date"
             value={weddingDate}
             onChange={(e) => setWeddingDate(e.target.value)}
-            className="mt-1 block w-full max-w-[180px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full max-w-[180px] rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
@@ -141,13 +141,13 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50"
+            className="w-full rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint disabled:opacity-50"
           >
             {loading ? "Creating account..." : "Sign up"}
           </button>
           <Link
             href="/login"
-            className="text-center text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+            className="text-center text-sm text-accent hover:underline"
           >
             Already have an account? Log in
           </Link>

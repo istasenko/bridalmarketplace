@@ -31,7 +31,7 @@ export default function SellGate() {
 
   if (status === "loading") {
     return (
-      <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-8 text-center text-neutral-600">
+      <div className="rounded-z-lg border border-[var(--border)] bg-surface p-8 text-center text-[var(--muted)]">
         Loading...
       </div>
     );
@@ -39,22 +39,22 @@ export default function SellGate() {
 
   if (status === "login") {
     return (
-      <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-8">
-        <h2 className="text-lg font-medium text-neutral-900">Log in to create listings</h2>
-        <p className="mt-2 text-neutral-600">
+      <div className="rounded-z-lg border border-[var(--border)] bg-surface p-8">
+        <h2 className="font-heading text-lg font-semibold text-[var(--foreground)]">Log in to create listings</h2>
+        <p className="mt-2 text-[var(--muted)]">
           Log in to list items. You can browse and buy without an account, but you need to sign in
           to sell.
         </p>
         <div className="mt-6 flex gap-4">
           <Link
             href={`/login?next=${encodeURIComponent("/sell")}`}
-            className="rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700"
+            className="rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint"
           >
             Log in
           </Link>
           <Link
             href="/signup"
-            className="rounded-md border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            className="rounded-z border border-pale-blue px-4 py-2.5 text-sm font-medium text-pale-blue transition-colors hover:bg-pale-blue-soft"
           >
             Sign up
           </Link>
@@ -65,15 +65,15 @@ export default function SellGate() {
 
   if (status === "setup_shop") {
     return (
-      <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-8">
-        <h2 className="text-lg font-medium text-neutral-900">Set up your shop first</h2>
-        <p className="mt-2 text-neutral-600">
+      <div className="rounded-z-lg border border-[var(--border)] bg-surface p-8">
+        <h2 className="font-heading text-lg font-semibold text-[var(--foreground)]">Set up your shop first</h2>
+        <p className="mt-2 text-[var(--muted)]">
           Before you can create listings, add your shop name and location so buyers know who
           they&apos;re buying from.
         </p>
         <Link
           href="/sell/setup"
-          className="mt-6 inline-block rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700"
+          className="mt-6 inline-block rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint"
         >
           Set up shop
         </Link>

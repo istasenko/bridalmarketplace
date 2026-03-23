@@ -26,7 +26,7 @@ export default function ContactSellerButton({
     <a
       href={`mailto:${email}`}
       onClick={handleClick}
-      className="inline-block rounded-md bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-700"
+      className="inline-block rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint"
     >
       Contact seller
     </a>
