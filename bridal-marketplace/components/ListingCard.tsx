@@ -12,9 +12,9 @@ export default function ListingCard({ listing, categoryName, styleNames }: Listi
   const sellerLocation = listing.seller.location + (listing.seller.zip ? ` ${listing.seller.zip}` : "");
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-z-lg border border-[var(--border)] bg-white shadow-z transition-all duration-300 hover:shadow-z-hover">
+    <div className="group flex flex-col overflow-hidden rounded-z-lg border border-[var(--border)] bg-surface shadow-z transition-all duration-300 hover:shadow-z-hover">
       <Link href={`/listings/${listing.id}`} className="flex flex-1 flex-col">
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-z-lg bg-accent-soft">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-z-lg bg-blush-soft/30">
           <Image
             src={listing.imageUrls[0] ?? ""}
             alt={listing.title}
@@ -33,10 +33,10 @@ export default function ListingCard({ listing, categoryName, styleNames }: Listi
             <span className="rounded-z bg-sage-light px-2.5 py-0.5 text-xs font-medium text-sage">
               {categoryName}
             </span>
-            {styleNames.slice(0, 2).map((name) => (
+            {styleNames.slice(0, 1).map((name) => (
               <span
                 key={name}
-                className="rounded-z bg-accent-light px-2.5 py-0.5 text-xs font-medium text-accent"
+                className="rounded-z bg-accent-light px-2.5 py-0.5 text-xs font-medium text-[#001e1d]"
               >
                 {name}
               </span>

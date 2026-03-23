@@ -52,7 +52,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
   }
 
   return (
-    <div className="sticky top-0 z-10 border-b border-[var(--border)] bg-white/95 py-5 backdrop-blur-sm">
+    <div className="sticky top-0 z-10 border-b border-[var(--border)] bg-surface/95 py-5 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4">
         <div className="flex items-center gap-2">
           <label htmlFor="category" className="text-sm font-medium text-[var(--muted)]">
@@ -62,7 +62,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
             id="category"
             value={category}
             onChange={(e) => updateFilters({ category: e.target.value })}
-            className="rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm text-[var(--foreground)] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            className="rounded-z border border-[var(--border)] bg-surface px-3 py-2 text-sm text-[var(--foreground)] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">All</option>
             {getTopLevelCategories(categories).flatMap((parent) => {
@@ -86,7 +86,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => updateFilters({ style: "" })}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${!style ? "bg-accent text-white hover:bg-accent/90" : "bg-sage-light text-sage hover:bg-sage-light/80"}`}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${!style ? "bg-butter text-[#001e1d] hover:bg-mint active:bg-mint" : "bg-mint-soft text-[var(--foreground)] hover:bg-mint"}`}
             >
               All
             </button>
@@ -94,7 +94,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
               <button
                 key={s.id}
                 onClick={() => updateFilters({ style: s.slug })}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${style === s.slug ? "bg-accent text-white hover:bg-accent/90" : "bg-sage-light text-sage hover:bg-sage-light/80"}`}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${style === s.slug ? "bg-butter text-[#001e1d] hover:bg-mint active:bg-mint" : "bg-mint-soft text-[var(--foreground)] hover:bg-mint"}`}
               >
                 {s.name}
               </button>
@@ -113,10 +113,10 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
             maxLength={5}
             value={zip}
             onChange={(e) => updateFilters({ zip: e.target.value.replace(/\D/g, "").slice(0, 5) })}
-            className="w-20 rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            className="w-20 rounded-z border border-[var(--border)] bg-surface px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
           {maxMiles && !zip && (
-            <span className="text-xs text-amber-600">Enter zip to filter by distance</span>
+            <span className="text-xs text-blush">Enter zip to filter by distance</span>
           )}
           <label htmlFor="maxMiles" className="text-sm font-medium text-[var(--muted)]">
             Max miles
@@ -125,7 +125,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
             id="maxMiles"
             value={maxMiles}
             onChange={(e) => updateFilters({ maxMiles: e.target.value })}
-            className="rounded-z border border-[var(--border)] bg-white px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            className="rounded-z border border-[var(--border)] bg-surface px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">Any</option>
             {MAX_MILES_OPTIONS.map((m) => (

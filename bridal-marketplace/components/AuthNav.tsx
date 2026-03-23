@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 export default function AuthNav() {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [sellerId, setSellerId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -50,13 +51,20 @@ export default function AuthNav() {
     router.refresh();
   };
 
+  const isBrowseActive = pathname === "/";
+  const isSellActive = pathname?.startsWith("/sell");
+  const isMyShopActive = sellerId && pathname?.startsWith(`/shops/${sellerId}`);
+
+  const navLinkClass = (active: boolean) =>
+    `text-sm transition-colors hover:text-accent hover:underline ${active ? "font-medium text-accent" : "text-[var(--muted)]"}`;
+
   if (loading) {
     return (
       <nav className="flex items-center gap-6">
-        <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
+        <Link href="/" className={navLinkClass(false)}>
           Browse
         </Link>
-        <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
+        <Link href="/sell" className={navLinkClass(false)}>
           Sell
         </Link>
       </nav>
@@ -66,16 +74,16 @@ export default function AuthNav() {
   if (user) {
     return (
       <nav className="flex items-center gap-6">
-        <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
+        <Link href="/" className={navLinkClass(isBrowseActive)}>
           Browse
         </Link>
-        <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
+        <Link href="/sell" className={navLinkClass(isSellActive)}>
           Sell
         </Link>
         {sellerId && (
           <Link
             href={`/shops/${sellerId}`}
-            className="text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
+            className={navLinkClass(!!isMyShopActive)}
           >
             My shop
           </Link>
@@ -96,15 +104,15 @@ export default function AuthNav() {
 
   return (
     <nav className="flex items-center gap-6">
-      <Link href="/" className="text-sm text-[var(--muted)] transition-colors hover:text-accent">
+      <Link href="/" className={navLinkClass(isBrowseActive)}>
         Browse
       </Link>
-      <Link href="/sell" className="text-sm font-medium text-accent hover:underline">
+      <Link href="/sell" className={navLinkClass(isSellActive)}>
         Sell
       </Link>
       <Link
         href="/login"
-        className="rounded-z bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+        className="rounded-z bg-butter px-4 py-2 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint"
       >
         Log in
       </Link>

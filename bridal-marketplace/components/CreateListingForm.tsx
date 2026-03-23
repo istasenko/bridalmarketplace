@@ -29,27 +29,27 @@ type ListingKindStepProps = {
 function ListingKindStep({ onSelect }: ListingKindStepProps) {
   return (
     <div className="space-y-4">
-      <p className="text-sm font-medium text-neutral-700">What are you listing?</p>
+      <p className="text-sm font-medium text-[var(--muted)]">What are you listing?</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <button
           type="button"
           onClick={() => onSelect("reselling")}
-          className="flex flex-col rounded-lg border-2 border-neutral-200 bg-white p-6 text-left transition-colors hover:border-neutral-400 hover:bg-neutral-50"
+          className="flex flex-col rounded-lg border-2 border-[var(--border)] bg-surface p-6 text-left transition-colors hover:border-accent hover:bg-accent-soft"
         >
-          <span className="font-semibold text-neutral-900">Pre-owned item (reselling)</span>
-          <span className="mt-2 text-sm text-neutral-600">
+          <span className="font-semibold text-[var(--foreground)]">Pre-owned item (reselling)</span>
+          <span className="mt-2 text-sm text-[var(--muted)]">
             Something you used or no longer need — table numbers, centerpieces, favors, etc.
           </span>
         </button>
         <button
           type="button"
           onClick={() => onSelect("creator")}
-          className="flex flex-col rounded-lg border-2 border-neutral-200 bg-white p-6 text-left transition-colors hover:border-neutral-400 hover:bg-neutral-50"
+          className="flex flex-col rounded-lg border-2 border-[var(--border)] bg-surface p-6 text-left transition-colors hover:border-accent hover:bg-accent-soft"
         >
-          <span className="font-semibold text-neutral-900">
+          <span className="font-semibold text-[var(--foreground)]">
             Something I created (handmade, vintage, supplies)
           </span>
-          <span className="mt-2 text-sm text-neutral-600">
+          <span className="mt-2 text-sm text-[var(--muted)]">
             Items you made, vintage finds, or craft supplies for DIY brides.
           </span>
         </button>
@@ -179,7 +179,7 @@ export default function CreateListingForm() {
         <ListingKindStep onSelect={setListingKind} />
         <Link
           href="/"
-          className="mt-8 inline-block text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+          className="mt-8 inline-block text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
         >
           ← Keep shopping
         </Link>
@@ -191,14 +191,14 @@ export default function CreateListingForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2">
-        <span className="text-sm text-neutral-600">
+      <div className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-surface px-3 py-2">
+        <span className="text-sm text-[var(--muted)]">
           Listing as: {listingKind === "creator" ? "Creator" : "Reseller"}
         </span>
         <button
           type="button"
           onClick={() => setListingKind(null)}
-          className="text-sm text-neutral-500 underline hover:text-neutral-700"
+          className="text-sm text-[var(--muted)] underline hover:text-accent"
         >
           Change
         </button>
@@ -209,7 +209,7 @@ export default function CreateListingForm() {
       )}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-neutral-700">
+        <label htmlFor="title" className="block text-sm font-medium text-[var(--muted)]">
           Title *
         </label>
         <input
@@ -217,7 +217,7 @@ export default function CreateListingForm() {
           name="title"
           type="text"
           required
-          className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           placeholder={
             listingKind === "creator"
               ? "e.g. Hand-painted Welcome Sign"
@@ -227,14 +227,14 @@ export default function CreateListingForm() {
       </div>
 
       <div>
-        <label htmlFor="categoryId" className="block text-sm font-medium text-neutral-700">
+        <label htmlFor="categoryId" className="block text-sm font-medium text-[var(--muted)]">
           Category *
         </label>
         <select
           id="categoryId"
           name="categoryId"
           required
-          className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
         >
           <option value="">Select category</option>
           {getTopLevelCategories().map((parent) => {
@@ -259,7 +259,7 @@ export default function CreateListingForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-neutral-700">Style *</label>
+        <label className="block text-sm font-medium text-[var(--muted)]">Style *</label>
         <div className="mt-2 flex flex-wrap gap-2">
           {styles.map((s) => (
             <label key={s.id} className="flex items-center gap-2">
@@ -267,7 +267,7 @@ export default function CreateListingForm() {
                 type="checkbox"
                 name="styleIds"
                 value={s.id}
-                className="rounded border-neutral-300"
+                className="rounded border-[var(--border)]"
               />
               <span className="text-sm">{s.name}</span>
             </label>
@@ -277,14 +277,14 @@ export default function CreateListingForm() {
 
       {listingKind === "creator" && (
         <div>
-          <label htmlFor="creatorListingType" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="creatorListingType" className="block text-sm font-medium text-[var(--muted)]">
             Listing type *
           </label>
           <select
             id="creatorListingType"
             name="creatorListingType"
             required
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">Select type</option>
             {CREATOR_LISTING_TYPES.map((o) => (
@@ -297,7 +297,7 @@ export default function CreateListingForm() {
       )}
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-neutral-700">
+        <label htmlFor="description" className="block text-sm font-medium text-[var(--muted)]">
           Description *
         </label>
         <textarea
@@ -305,14 +305,14 @@ export default function CreateListingForm() {
           name="description"
           rows={4}
           required
-          className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           placeholder="Describe your item..."
         />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="price" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="price" className="block text-sm font-medium text-[var(--muted)]">
             Price ($) *
           </label>
           <input
@@ -322,18 +322,18 @@ export default function CreateListingForm() {
             min="0"
             step="0.01"
             required
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
         <div>
-          <label htmlFor="condition" className="block text-sm font-medium text-neutral-700">
+          <label htmlFor="condition" className="block text-sm font-medium text-[var(--muted)]">
             Condition *
           </label>
           <select
             id="condition"
             name="condition"
             required
-            className="mt-1 block w-full rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+            className="mt-1 block w-full rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] placeholder:text-[var(--muted)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           >
             <option value="">Select</option>
             {conditions.map((c) => (
@@ -346,20 +346,20 @@ export default function CreateListingForm() {
       </div>
 
       {listingKind === "creator" && (
-        <div className="space-y-3 rounded-lg border border-neutral-200 bg-neutral-50 p-4">
+        <div className="space-y-3 rounded-lg border border-[var(--border)] bg-surface p-4">
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
               name="madeToOrder"
               checked={madeToOrderChecked}
               onChange={(e) => setMadeToOrderChecked(e.target.checked)}
-              className="rounded border-neutral-300"
+              className="rounded border-[var(--border)]"
             />
-            <span className="text-sm font-medium text-neutral-700">Made to order</span>
+            <span className="text-sm font-medium text-[var(--muted)]">Made to order</span>
           </label>
           {madeToOrderChecked && (
             <div className="pl-6">
-              <label htmlFor="leadTimeDays" className="block text-sm text-neutral-600">
+              <label htmlFor="leadTimeDays" className="block text-sm text-[var(--muted)]">
                 Lead time (days) *
               </label>
               <input
@@ -369,9 +369,9 @@ export default function CreateListingForm() {
                 min="1"
                 max="365"
                 required={madeToOrderChecked}
-                className="mt-1 block w-full max-w-[120px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+                className="mt-1 block w-full max-w-[120px] rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
               />
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-1 text-xs text-[var(--muted)]">
                 How many days until the item is ready to ship or pickup
               </p>
             </div>
@@ -380,7 +380,7 @@ export default function CreateListingForm() {
       )}
 
       <div>
-        <label htmlFor="quantity" className="block text-sm font-medium text-neutral-700">
+        <label htmlFor="quantity" className="block text-sm font-medium text-[var(--muted)]">
           Quantity
         </label>
         <input
@@ -389,12 +389,12 @@ export default function CreateListingForm() {
           type="number"
           min="1"
           defaultValue="1"
-          className="mt-1 block w-full max-w-[120px] rounded-md border border-neutral-300 px-3 py-2 shadow-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          className="mt-1 block w-full max-w-[120px] rounded-md border border-[var(--border)] bg-surface px-3 py-2 text-[var(--foreground)] shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-neutral-700">
+        <label className="block text-sm font-medium text-[var(--muted)]">
           Delivery *
         </label>
         <div className="mt-2 flex flex-wrap gap-4">
@@ -405,7 +405,7 @@ export default function CreateListingForm() {
                 name="deliveryOption"
                 value={o.value}
                 required
-                className="border-neutral-300"
+                className="border-[var(--border)]"
               />
               <span className="text-sm">{o.label}</span>
             </label>
@@ -413,12 +413,12 @@ export default function CreateListingForm() {
         </div>
       </div>
 
-      <p className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm text-neutral-600">
+      <p className="rounded-lg border border-[var(--border)] bg-surface px-3 py-2 text-sm text-[var(--muted)]">
         Your contact info and location will be taken from your shop profile.
       </p>
 
       <div>
-        <label className="block text-sm font-medium text-neutral-700">Photos *</label>
+        <label className="block text-sm font-medium text-[var(--muted)]">Photos *</label>
         <ImageUpload ref={imageUploadRef} />
       </div>
 
@@ -426,13 +426,13 @@ export default function CreateListingForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-md bg-neutral-800 px-6 py-2.5 text-sm font-medium text-white hover:bg-neutral-700 disabled:opacity-50"
+          className="rounded-md bg-butter px-6 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint disabled:opacity-50 disabled:opacity-50"
         >
           {submitting ? "Creating..." : "Create listing"}
         </button>
         <Link
           href="/"
-          className="rounded-md border border-neutral-300 px-6 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+          className="rounded-md border border-[var(--border)] px-6 py-2.5 text-sm font-medium text-[var(--muted)] hover:bg-accent-soft"
         >
           Cancel
         </Link>

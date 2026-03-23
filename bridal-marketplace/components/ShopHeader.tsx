@@ -28,7 +28,7 @@ export default function ShopHeader({
   return (
     <div className="flex flex-wrap items-start justify-between gap-6 border-b border-[var(--border)] pb-6">
       <div className="flex items-start gap-4">
-        <div className="flex h-20 w-20 shrink-0 overflow-hidden rounded-z-lg bg-accent-soft">
+        <div className="flex h-20 w-20 shrink-0 overflow-hidden rounded-z-lg bg-blush-soft/30">
           {shop.avatarUrl ? (
             <Image
               src={shop.avatarUrl}
@@ -62,13 +62,13 @@ export default function ShopHeader({
           <>
             <a
               href={`mailto:${sellerEmail}`}
-              className="inline-flex items-center gap-2 rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
+              className="inline-flex items-center gap-2 rounded-z border border-pale-blue bg-surface px-4 py-2 text-sm font-medium text-pale-blue transition-colors hover:bg-pale-blue-soft"
             >
               <span aria-hidden>✉</span> Contact
             </a>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
+              className="inline-flex items-center gap-2 rounded-z border border-pale-blue bg-surface px-4 py-2 text-sm font-medium text-pale-blue transition-colors hover:bg-pale-blue-soft"
             >
               <span aria-hidden>♡</span> Follow
             </button>
@@ -78,7 +78,7 @@ export default function ShopHeader({
           <button
             type="button"
             onClick={onEditClick}
-            className="rounded-z border border-sage bg-white px-4 py-2 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
+            className="rounded-z border border-pale-blue bg-surface px-4 py-2 text-sm font-medium text-pale-blue transition-colors hover:bg-pale-blue-soft"
           >
             Edit shop
           </button>

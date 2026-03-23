@@ -19,7 +19,7 @@ export default async function EditListingPage({ params }: PageProps) {
   if (!currentUser || currentUser.id !== listing.sellerId) notFound();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-2xl px-4 py-8">
         <Link
           href={`/shops/${listing.sellerId}`}

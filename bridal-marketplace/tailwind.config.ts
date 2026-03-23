@@ -9,6 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: "var(--background)",
+        surface: "var(--surface)",
+        "button-text": "var(--button-text)",
+        butter: "var(--butter)",
+        "butter-pressed": "var(--butter-pressed)",
+        blush: "var(--blush)",
+        "blush-soft": "var(--blush-soft)",
+        "pale-blue": "var(--pale-blue)",
+        "pale-blue-soft": "var(--pale-blue-soft)",
+        mint: "var(--mint)",
+        "mint-soft": "var(--mint-soft)",
         accent: "var(--accent)",
         "accent-light": "var(--accent-light)",
         "accent-soft": "var(--accent-soft)",

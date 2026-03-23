@@ -20,7 +20,7 @@ export default async function ListingPage({ params }: PageProps) {
   const isOwner = !!listing.sellerId && currentUser?.id === listing.sellerId;
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-screen bg-background">
       <ListingViewTracker listingId={id} shouldTrack={!isOwner} />
       <div className="mx-auto max-w-4xl px-4 pt-4">
         <Link

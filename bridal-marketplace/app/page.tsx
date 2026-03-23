@@ -17,10 +17,10 @@ export default async function HomePage() {
       fallback={
         <div className="border-b border-[var(--border)] py-4">
           <div className="mx-auto max-w-6xl px-4 py-8">
-            <div className="h-8 w-32 animate-pulse rounded-z bg-accent-soft" />
+            <div className="h-8 w-32 animate-pulse rounded-z bg-surface/50" />
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="aspect-[4/3] animate-pulse rounded-z-lg bg-accent-soft" />
+                <div key={i} className="aspect-[4/3] animate-pulse rounded-z-lg bg-surface/50" />
               ))}
             </div>
           </div>

@@ -20,7 +20,7 @@ export default function ListingDetail({ listing, isOwner = false }: ListingDetai
   return (
     <article className="mx-auto max-w-4xl px-4 py-8">
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="relative aspect-square overflow-hidden rounded-z-lg bg-accent-soft">
+        <div className="relative aspect-square overflow-hidden rounded-z-lg bg-blush-soft/50">
           <Image
             src={listing.imageUrls[0] ?? ""}
             alt={listing.title}
@@ -56,14 +56,14 @@ export default function ListingDetail({ listing, isOwner = false }: ListingDetai
             {listingStyles.map((name) => (
               <span
                 key={name}
-                className="rounded-z bg-accent-light px-2.5 py-1 text-sm font-medium text-accent"
+                className="rounded-z bg-accent-light px-2.5 py-1 text-sm font-medium text-[#001e1d]"
               >
                 {name}
               </span>
             ))}
           </div>
           <p className="mt-6 text-[var(--foreground)]">{listing.description}</p>
-          <div className="mt-8 rounded-z-lg border border-[var(--border)] bg-accent-soft p-5">
+          <div className="mt-8 rounded-z-lg border border-[var(--border)] bg-surface/80 p-5">
             <p className="text-sm font-medium text-[var(--foreground)]">Seller</p>
             <p className="mt-1 font-medium text-[var(--foreground)]">{listing.seller.name}</p>
             <p className="text-sm text-[var(--muted)]">
@@ -74,7 +74,7 @@ export default function ListingDetail({ listing, isOwner = false }: ListingDetai
               {listing.sellerId && (
                 <Link
                   href={`/shops/${listing.sellerId}`}
-                  className="rounded-z border border-sage bg-white px-4 py-2.5 text-sm font-medium text-sage transition-colors hover:bg-sage-light"
+                  className="rounded-z border border-pale-blue bg-surface px-4 py-2.5 text-sm font-medium text-pale-blue transition-colors hover:bg-pale-blue-soft"
                 >
                   View shop
                 </Link>

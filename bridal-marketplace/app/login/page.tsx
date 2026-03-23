@@ -63,7 +63,7 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full rounded-z border border-[var(--border)] px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
@@ -79,7 +79,7 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full rounded-z border border-[var(--border)] px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            className="mt-1 block w-full rounded-z border border-[var(--border)] bg-surface px-3 py-2 shadow-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         </div>
 
@@ -87,7 +87,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-z bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent/90 disabled:opacity-50"
+            className="w-full rounded-z bg-butter px-4 py-2.5 text-sm font-medium text-[#001e1d] transition-colors hover:bg-mint active:bg-mint disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Log in"}
           </button>

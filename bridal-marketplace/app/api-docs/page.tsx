@@ -7,7 +7,7 @@ import "swagger-ui-react/swagger-ui.css";
 
 export default function ApiDocsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <SwaggerUI
         url="/api/openapi"
         persistAuthorization
