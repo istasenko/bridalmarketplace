@@ -1,6 +1,7 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useState, useEffect, useMemo } from "react";
 import type { Listing, Category, Style, ListingFilters } from "@/types/listing";
 import { applyListingFilters } from "@/lib/filter-listings";
 import FilterBar from "@/components/FilterBar";
@@ -17,25 +18,60 @@ export default function MarketplaceContent({
   categories,
   styles,
 }: MarketplaceContentProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") ?? "");
+
+  useEffect(() => {
+    setSearchQuery(searchParams.get("q") ?? "");
+  }, [searchParams]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const currentQ = searchParams.get("q") ?? "";
+      const nextQ = searchQuery.trim();
+      if (currentQ === nextQ) return;
+      const params = new URLSearchParams(searchParams.toString());
+      if (nextQ) params.set("q", nextQ);
+      else params.delete("q");
+      const qs = params.toString();
+      router.replace(qs ? `${pathname || "/"}?${qs}` : pathname || "/", { scroll: false });
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery, pathname, router, searchParams]);
+
   const maxMilesParam = searchParams.get("maxMiles");
   const maxMiles =
     maxMilesParam && !isNaN(parseInt(maxMilesParam, 10))
       ? parseInt(maxMilesParam, 10)
       : undefined;
-  const filters: ListingFilters = {
-    category: searchParams.get("category") || undefined,
-    style: searchParams.get("style") || undefined,
-    zip: searchParams.get("zip")?.trim() || undefined,
-    maxMiles,
-    includeShippable: searchParams.get("ship") === "1",
-  };
+  const category = searchParams.get("category") || undefined;
+  const style = searchParams.get("style") || undefined;
+  const zip = searchParams.get("zip")?.trim() || undefined;
+  const includeShippable = searchParams.get("ship") === "1";
+  const queryTrimmed = searchQuery.trim() || undefined;
 
-  const filtered = applyListingFilters(listings, filters, categories, styles);
+  const filtered = useMemo(() => {
+    const filters: ListingFilters = {
+      category,
+      style,
+      zip,
+      maxMiles,
+      includeShippable,
+      query: queryTrimmed,
+    };
+    return applyListingFilters(listings, filters, categories, styles);
+  }, [listings, categories, styles, category, style, zip, maxMiles, includeShippable, queryTrimmed]);
 
   return (
     <>
-      <FilterBar categories={categories} styles={styles} />
+      <FilterBar
+        categories={categories}
+        styles={styles}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <h2 className="font-heading mb-6 text-xl font-semibold text-[var(--muted)]">
           {filtered.length} listing{filtered.length !== 1 ? "s" : ""}
@@ -58,7 +94,7 @@ export default function MarketplaceContent({
         </div>
         {filtered.length === 0 && (
           <p className="py-16 text-center text-[var(--muted)]">
-            No listings match your filters. Try changing category, style, or distance.
+            No listings match your filters. Try a different search, category, style, or distance.
           </p>
         )}
       </div>

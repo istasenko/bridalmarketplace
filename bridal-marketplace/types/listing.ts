@@ -65,6 +65,8 @@ export type Listing = {
 export type ListingFilters = {
   category?: string;
   style?: string;
+  /** Case-insensitive substring match on title, description, category, styles, seller */
+  query?: string;
   /** User's zip code for distance filter */
   zip?: string;
   /** Max miles willing to drive; only applied when zip is set */

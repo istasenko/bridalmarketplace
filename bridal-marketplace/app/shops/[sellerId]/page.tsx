@@ -32,7 +32,7 @@ export default async function ShopPage({ params }: PageProps) {
       <div className="mx-auto max-w-6xl px-4 pt-4">
         <Link
           href="/"
-          className="text-sm text-neutral-600 hover:text-neutral-900 hover:underline"
+          className="text-sm text-[var(--muted)] transition-colors hover:text-accent hover:underline"
         >
           ← Keep shopping
         </Link>

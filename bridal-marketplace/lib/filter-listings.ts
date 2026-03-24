@@ -12,6 +12,34 @@ function getCategoryIdsForFilter(slug: string, categories: Category[]): string[]
   return [cat.id];
 }
 
+function listingMatchesQuery(
+  listing: Listing,
+  q: string,
+  categories: Category[],
+  styles: Style[]
+): boolean {
+  const needle = q.toLowerCase();
+  if (listing.title.toLowerCase().includes(needle)) return true;
+  if (listing.description.toLowerCase().includes(needle)) return true;
+  if (listing.condition.toLowerCase().includes(needle)) return true;
+  if (listing.seller.name.toLowerCase().includes(needle)) return true;
+  if (listing.seller.location.toLowerCase().includes(needle)) return true;
+  const zip = listing.seller.zip?.toLowerCase();
+  if (zip && zip.includes(needle)) return true;
+
+  const cat = categories.find((c) => c.id === listing.categoryId);
+  if (cat) {
+    if (cat.name.toLowerCase().includes(needle)) return true;
+    const parent = cat.parentId ? categories.find((c) => c.id === cat.parentId) : undefined;
+    if (parent?.name.toLowerCase().includes(needle)) return true;
+  }
+
+  return listing.styleIds.some((id) => {
+    const style = styles.find((s) => s.id === id);
+    return style?.name.toLowerCase().includes(needle);
+  });
+}
+
 /**
  * Pure filter function: same logic as getListings but works with any listing array.
  * Used for client-side filtering so the list updates immediately when params change.
@@ -37,6 +65,11 @@ export function applyListingFilters(
     if (style) {
       result = result.filter((l) => l.styleIds.includes(style.id));
     }
+  }
+
+  const textQ = filters.query?.trim();
+  if (textQ) {
+    result = result.filter((l) => listingMatchesQuery(l, textQ, categories, styles));
   }
 
   if (filters.zip?.trim() && filters.maxMiles != null && filters.maxMiles > 0) {
