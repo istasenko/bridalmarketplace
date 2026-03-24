@@ -21,9 +21,11 @@ const MAX_MILES_OPTIONS = [
 type FilterBarProps = {
   categories: Category[];
   styles: Style[];
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
 };
 
-export default function FilterBar({ categories, styles }: FilterBarProps) {
+export default function FilterBar({ categories, styles, searchQuery, onSearchChange }: FilterBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -46,6 +48,7 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
     if (newZip) params.set("zip", newZip);
     if (newMaxMiles) params.set("maxMiles", newMaxMiles);
     if (newShip) params.set("ship", "1");
+    if (searchQuery.trim()) params.set("q", searchQuery.trim());
     const query = params.toString();
     const url = query ? `${pathname || "/"}?${query}` : pathname || "/";
     router.push(url);
@@ -54,6 +57,20 @@ export default function FilterBar({ categories, styles }: FilterBarProps) {
   return (
     <div className="sticky top-0 z-10 border-b border-[var(--border)] bg-surface/95 py-5 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4">
+        <div className="relative min-w-[min(100%,14rem)] flex-1 basis-full sm:basis-[16rem] sm:max-w-md">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" aria-hidden>
+            🔍
+          </span>
+          <input
+            id="marketplace-search"
+            type="search"
+            placeholder="Search listings…"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full rounded-full border border-[var(--border)] bg-surface py-2 pl-9 pr-4 text-sm text-[var(--foreground)] focus:border-blush focus:outline-none focus:ring-2 focus:ring-blush/30"
+            aria-label="Search marketplace"
+          />
+        </div>
         <div className="flex items-center gap-2">
           <label htmlFor="category" className="text-sm font-medium text-[var(--muted)]">
             Category
